@@ -1,0 +1,22 @@
+% Introduction
+
+**Add great-looking visualizations to your web applications!
+...Without a single line of JavaScript.**
+
+Google Chart Tools is a client-side JavaScript library that provides
+rich, interactive charts and other data visualizations that run in the
+browser.  It supports many common chart types including image and
+interactive charts, maps, and data tables.  The complete list of
+examples can be found at the Google Chart Tools
+[Gallery][gvis-gallery].
+
+The visualizations run in all modern JavaScript-enabled browsers.
+Some of the visualizations may require Adobe® Flash® Player for
+rendering.
+
+With the Google Visualization WebSharper™ Extensions you can develop
+WebSharper™ applications that use the Google Visualization API using
+nothing but F# code.
+
+[gvis]: http://code.google.com/apis/visualization/
+

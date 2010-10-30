@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5c51a0a3-3d37-4e05-af95-2fce77b4dfa8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <Name>IntelliFactory.WebSharper.Google.Visualization</Name>
+    <RootNamespace>$(Name)</RootNamespace>
+    <AssemblyName>IntelliFactory.WebSharper.Google.Visualization</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\$(Name).XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\$(Name).XML</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="$(INTELLIFACTORY)/build/IntelliFactory.FSharp.targets" />
+  <PropertyGroup>
+    <WEBSHARPER_HOME>$(IfIvyLibDir)</WEBSHARPER_HOME>
+  </PropertyGroup>
+  <Import Project="$(WEBSHARPER_HOME)/IntelliFactory.WebSharper.targets" />
+  <ItemGroup>
+    <Compile Include="Dependencies.fs" />
+    <Compile Include="Base.fs" />
+    <Compile Include="Table.fs" />
+    <Compile Include="AnnotatedTimeLine.fs" />
+    <Compile Include="AreaChart.fs" />
+    <Compile Include="BarChart.fs" />
+    <Compile Include="ColumnChart.fs" />
+    <Compile Include="Formatters.fs" />
+    <Compile Include="Gauge.fs" />
+    <Compile Include="Regions.fs" />
+    <Compile Include="GeoMap.fs" />
+    <Compile Include="IntensityMap.fs" />
+    <Compile Include="LineChart.fs" />
+    <Compile Include="MotionChart.fs" />
+    <Compile Include="OrgChart.fs" />
+    <Compile Include="PieChart.fs" />
+    <Compile Include="ScatterChart.fs" />
+    <Compile Include="TreeMap.fs" />
+    <Compile Include="Events.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core" />
+    <Reference Include="System" />
+    <Reference Include="IntelliFactory.WebSharper" />
+    <Reference Include="IntelliFactory.WebSharper.Dom" />
+    <Reference Include="IntelliFactory.WebSharper.Ecma" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+</Project>

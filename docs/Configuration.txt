@@ -1,0 +1,18 @@
+% Configuration
+
+A Google Maps API key is necessary to use this extension.  A separate
+key is required for every public domain where the application is
+served.
+
+Configuration steps:
+
+  * Obtain an key by [signing up][jsapi-signup] for it.
+
+  * Provide the key to WebSharper™ by adding the following to
+    `Web.config`:
+
+        #xml
+        <appSettings>
+            <add key="google.jsapi.key" value="YOUR-KEY">
+
+[jsapi-signup]: http://code.google.com/apis/maps/signup.html

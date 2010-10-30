@@ -1,0 +1,219 @@
+% Examples
+
+## DataTable
+
+All the visualizations use the same interface for representing data.
+Data is represented by either the `DataTable` object or the `DataView`
+object.
+
+The following example creates a simple DataTable with 3 columns and 3
+records:
+
+    #fsharp
+    [<JavaScript>]
+    let TableData =
+        let data = new Base.DataTable()
+        data.addColumn(StringType, "Name") |> ignore
+        data.addColumn(NumberType, "Height") |> ignore
+        data.addColumn(BooleanType, "Smokes") |> ignore
+        data.addRows(3.) |> ignore
+        data.setCell(0., 0., "Tong Ning mu") |> ignore
+        data.setCell(1., 0., "Huang Ang fa") |> ignore
+        data.setCell(2., 0., "Teng nu") |> ignore
+        data.setCell(0., 1., 174.) |> ignore
+        data.setCell(1., 1., 523.) |> ignore
+        data.setCell(2., 1., 86.) |> ignore
+        data.setCell(0., 2., true) |> ignore
+        data.setCell(1., 2., false) |> ignore
+        data.setCell(2., 2., true) |> ignore
+        data
+
+First, you add the columns (lines 4-6).  Every column is defined by a
+type and an optional label.  The `addColumn` method returns a number
+indicating the amount of columns in the `DataTable`, and has to be
+piped to `ignore`.
+
+Having the schema defined you proceed to add the rows.  For this, you
+first call the `addRows` with the number of items you expect to add to
+the `DataTable`.  Then you set every item using the `setCell` method.
+
+Another way to build data is the `addRows` method.
+
+    #fsharp
+    [<JavaScript>]
+    let V: obj -> Cell = Cell.Value
+
+    [<JavaScript>]
+    let TableData =
+        let data = new Base.DataTable()
+        data.addColumn(StringType, "Fruit") |> ignore
+        data.addColumn(DateType, "Date") |> ignore
+        data.addColumn(NumberType, "Sales") |> ignore
+        data.addColumn(NumberType, "Expenses") |> ignore
+        data.addColumn(StringType, "Location") |> ignore
+        [|
+          [|
+            V "Apples" 
+            V (new JDate(1988, 0, 1)) 
+            V 1000
+            V 300
+            V "East"
+          |]
+          [| 
+            V "Oranges"
+            V (new JDate(1988, 0, 1))
+            V 1150
+            V 200
+            V "West"|]
+          [| 
+            V "Bananas"
+            V (new JDate(1988, 0, 1))
+            V 300;
+            V 250
+            V "West"
+          |]
+          [| 
+            V "Apples" 
+            V (new JDate(1989, 6, 1))
+            V 1200
+            V 400
+            V "East"
+          |]
+          [| 
+            V "Oranges"
+            V (new JDate(1989, 6, 1))
+            V 750;
+            V 150
+            V "West"
+          |]
+          [| 
+            V "Bananas"
+            V (new JDate(1989, 6, 1))
+            V 788;
+            V 617
+            V "West"
+          |] 
+        |]
+        |> data.addRows
+        |> ignore
+
+Each array corresponds to a row in the `DataTable`.
+
+## DataView
+
+`DataView` allows you to manipulate a `DataTable` to provide multiple
+views of the data.  The following example demonstrates its use.
+
+A DataView can be seen as a read-only version of the `DataTable`.  You
+start by defining the following `DataTable`:
+
+    #fsharp
+    [<JavaScript>]
+    let MyData =
+        let data = new Base.DataTable()
+        data.addColumn(StringType, "Name") |> ignore
+        data.addColumn(NumberType, "Height") |> ignore
+        data.addColumn(BooleanType, "Smokes") |> ignore
+        data.addRows(3) |> ignore
+        data.setCell(0, 0, "Tong Ning mu") |> ignore
+        data.setCell(1, 0, "Huang Ang fa") |> ignore
+        data.setCell(2, 0, "Teng nu") |> ignore
+        data.setCell(0, 1, 174.) |> ignore
+        data.setCell(1, 1, 523.) |> ignore
+        data.setCell(2, 1, 86.) |> ignore
+        data.setCell(0, 2, true) |> ignore
+        data.setCell(1, 2, false) |> ignore
+        data.setCell(2, 2, true) |> ignore
+        data
+
+When visualized, this `DataTable` will look like this:
+
+![DV1](DV1.png)
+
+The following code creates 10 different `DataView` objects based on
+`MyData`:
+
+    #fsharp
+    [<JavaScript>]
+    let Views =
+        let views = 
+            [| 
+                for i in 1..10  ->
+                    new DataView(TableData)
+            |]
+
+
+You now can hide and show columns by column index:
+
+    #fsharp
+    views.[1].hideColumns [|1; 2|]
+    views.[2].hideRows [|0; 2|]
+
+The result looks like this:
+
+![DV2](DV2.png)\
+
+Another useful method allows you to select and order a subset of the
+columns and rows.
+
+    #fsharp
+    views.[3].setColumns [|1; 1|]
+    views.[4].setRows [|0; 2|]
+
+Result:
+
+![DV3](DV3.png)\
+
+The set methods can be used together with the `getSortedRows`.  This
+method returns an array of indices that correspond to a sort criteria.
+There are 2 methods supported.  The first allows you to specify the
+column you want to sort by.
+
+    #fsharp
+    let simpleOrder = views.[5].getSortedRows(1)
+    views.[5].setRows simpleOrder
+
+The second allows you to add an array of sorting criteria, being the
+first the most important.  This method receives a boolean to select if
+the sorting should be done in ascending or descending order.
+
+    #fsharp
+    let complexOrder =
+	let by i b = SortType.By(i, b)
+	views.[6].getSortedRows([| by 2 false; by 0 true|])
+    views.[6].setRows    complexOrder
+
+Result:
+
+![DV4](DV4.png)\
+
+The `setColumns` method is overloaded to add calculated columns.  A
+simple example is the following:
+
+    #fsharp
+    let c1 = Column.Float((fun _ -> 5.), "Five")
+    views.[7].setColumns [| c1 |]
+
+The function receives the current row of the column and the
+`DataTable` object.  With these capabilities it is easy to create an
+accumulated column of the values in column 1.
+
+    #fsharp
+    let accum = 
+        Column.Float(
+            (fun (t, r) ->
+		seq {
+		    for i in 0..(int r) -> 
+			t.getValue(i, 1) 
+			    |> unbox<float>
+		}
+		|> Seq.sum),
+	    "Accum")
+        let idx = Column.Index
+        views.[8].setColumns [| idx 0; idx 1; idx 2; accum |]
+        views
+
+The result is the following:
+
+![DV5](DV5.png)\
+
