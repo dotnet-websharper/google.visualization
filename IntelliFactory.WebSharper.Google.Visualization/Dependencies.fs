@@ -11,104 +11,112 @@
 
 namespace IntelliFactory.WebSharper.Google.JsApi
 
+open System
 open System.Configuration
 open IntelliFactory.WebSharper
 
 /// Requires the Google JS API.
 type JsApi() =
-    interface IResource with
+    interface Resources.IResource with
         member this.Id = "Google.JsAPI"
         member this.Dependencies = Seq.empty
-        member this.Render (resolver) (writer) =
+        member this.Render resolver =
             match ConfigurationManager.AppSettings.["google.jsapi.key"] with
             | null ->
                 failwith "AppSettings must contain `google.jsapi.key`."
             | key ->
-                writer.Write("<script type='text/javascript' \
-                    src='http://www.google.com/jsapi?key={0}'>\
-                    <!----></script>", key)
+                String.Format("http://www.google.com/jsapi?key={0}", key)
+                |> Resources.RenderJavaScript
 
 namespace IntelliFactory.WebSharper.Google.Visualization
 
 module Dependencies =
+    open System
     open System.Configuration
     open System.IO
     open IntelliFactory.WebSharper
-    open IntelliFactory.WebSharper.Google.JsApi    
+    open IntelliFactory.WebSharper.Google.JsApi   
 
-    let private render (name: string) (writer: TextWriter) =
-        writer.Write("<script type='text/javascript'>\
-                        google.load('visualization', '1', {{packages:['{0}']}});\
-                      </script>", name)
+    let private render (name: string) =
+        [Markup.ElementNode {
+            Name        = "script"
+            Attributes  = [{Name = "type"; Value="text/javascript"}]
+            Children    =
+                [
+                    String.Format("google.load(\"visualization\", \"1\", \
+                        {{packages:[\"{0}\"]}});", name)
+                    |> Markup.TextNode
+                ]
+        }]
 
     type Visualization() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_) (writer) =
-                writer.Write("<script type='text/javascript'>\
-                                google.load('visualization', '1');\
-                              </script>")
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render resolver =
+                [Markup.ElementNode {
+                    Name        = "script"
+                    Attributes  = [{Name = "type"; Value="text/javascript"}]
+                    Children    =
+                        [Markup.TextNode "google.load('visualization', '1')"]
+                }]
 
     type Table() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.Table"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "table" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render resolver = render "table"
 
-    type AnnotatedTimeLine() = 
-        interface IResource with
+    type AnnotatedTimeLine() =
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.AnnotatedTimeLine"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "annotatedtimeline" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "annotatedtimeline"
 
     type AreaChart() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.AreaChart"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton    
-            member this.Render(_)(writer) = render "corechart" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "corechart"
 
-    type Gauge() = 
-        interface IResource with
+    type Gauge() =
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.Gauge"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "gauge" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "gauge"
 
     type CoreChart() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.CoreChart"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "corechart" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "corechart"
 
     type GeoMap() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.GeoMap"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "geomap" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "geomap"
 
-    type IntensityMap() = 
-        interface IResource with
+    type IntensityMap() =
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.IntensityMap"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "intensitymap" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "intensitymap"
 
-    [<Require(typeof<JsApi>)>]
     type MotionChart() =
-        interface IResource with
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.MotionChart"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "motionchart" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "motionchart"
 
-    [<Require(typeof<JsApi>)>]
-    type OrgChart() = 
-        interface IResource with
+    type OrgChart() =
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.OrgChart"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "orgchart" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _ = render "orgchart"
 
-    [<Require(typeof<JsApi>)>]
-    type TreeMap() = 
-        interface IResource with
+    type TreeMap() =
+        interface Resources.IResource with
             member this.Id = "Google.Visualization.TreeMap"
-            member this.Dependencies = JsApi () :> IResource |> Seq.singleton
-            member this.Render(_)(writer) = render "treemap" writer
+            member this.Dependencies = Seq.singleton (JsApi () :> _)
+            member this.Render _= render "treemap"

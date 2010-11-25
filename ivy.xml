@@ -19,6 +19,8 @@
     <dependency name="if-ws" rev="latest.integration" conf="default->default" />
     <dependency name="if-ws-dom" rev="latest.integration" conf="default" />
     <dependency name="if-ws-ecma" rev="latest.integration" conf="default" />
+    <dependency name="if-ws-proxy-core" rev="latest.integration" conf="default" />
+    <dependency name="if-ws-control" rev="latest.integration" conf="default" />
     <dependency name="if-ws-ecma" rev="latest.integration" conf="build->default" />
     <dependency name="if-ws-dom" rev="latest.integration" conf="build->default" />
     <dependency name="if-ws-html" rev="latest.integration" conf="build->default" />
