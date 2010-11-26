@@ -133,7 +133,7 @@ type ColorFormat =
     ///       (example: '#FF0000' or 'red').
     member this.addGradientRange(from: obj, to': obj, color: string, fromBgColor: string, toBgColor: string) : unit = X
 
-[<Stub>]
+
 type DateFormatOptions = {
 
     /// A quick formatting option for the date. The following string values are supported,
