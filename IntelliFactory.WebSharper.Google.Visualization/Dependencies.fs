@@ -45,7 +45,7 @@ module Dependencies =
                 [
                     String.Format("google.load(\"visualization\", \"1\", \
                         {{packages:[\"{0}\"]}});", name)
-                    |> Markup.TextNode
+                    |> Markup.VerbatimTextNode
                 ]
         }]
 
