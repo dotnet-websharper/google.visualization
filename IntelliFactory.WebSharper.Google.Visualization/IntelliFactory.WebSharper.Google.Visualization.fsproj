@@ -66,8 +66,10 @@
     <Reference Include="IntelliFactory.WebSharper.Core" />
     <Reference Include="IntelliFactory.WebSharper.Control" />
     <Reference Include="IntelliFactory.Json" />
+    <Reference Include="IntelliFactory.PowerPack" />
     <Reference Include="IntelliFactory.WebSharper.Dom" />
     <Reference Include="IntelliFactory.WebSharper.Ecma" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 </Project>
