@@ -50,6 +50,8 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="IntelliFactory.WebSharper.Core" />
     <Reference Include="IntelliFactory.WebSharper.Control" />
+    <Reference Include="IntelliFactory.WebSharper.Json" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="Test.aspx" />
