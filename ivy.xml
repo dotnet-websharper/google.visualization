@@ -10,8 +10,7 @@
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="xml" type="doc" conf="default" />
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll.js" type="bin" conf="default" />
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll.dep" type="bin" conf="default" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="api.zip" type="doc" conf="default" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="Documentation.zip" type="doc" conf="default" />
+    <artifact name="if-ws-google-visualization-docs" ext="zip" type="doc" conf="default" />
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="pdb" type="debug" conf="default" />
   </publications>
   <dependencies>
