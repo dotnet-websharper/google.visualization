@@ -1,6 +1,6 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://doiop.com/ivy-2.1.0.xsd">
-  <info organisation="IntelliFactory" module="if-ws-google-visualization" revision="2.2" />
+  <info organisation="IntelliFactory" module="if-ws-google-visualization" revision="2.3" />
   <configurations>
     <conf name="build" />
     <conf name="default" />
@@ -8,8 +8,6 @@
   <publications>
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll" type="bin" conf="default" />
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="xml" type="doc" conf="default" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll.js" type="bin" conf="default" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll.dep" type="bin" conf="default" />
     <artifact name="if-ws-google-visualization-docs" ext="zip" type="doc" conf="default" />
     <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="pdb" type="debug" conf="default" />
   </publications>

@@ -31,11 +31,7 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\$(Name).XML</DocumentationFile>
   </PropertyGroup>
-  <Import Project="$(INTELLIFACTORY)/build/IntelliFactory.FSharp.targets" />
-  <PropertyGroup>
-    <WEBSHARPER_HOME>$(MSBuildProjectDirectory)/../.build/lib</WEBSHARPER_HOME>
-  </PropertyGroup>
-  <Import Project="$(WEBSHARPER_HOME)/IntelliFactory.WebSharper.targets" />
+  <Import Project="$(INTELLIFACTORY)/build/IntelliFactory.WebSharper-2.3.targets" />
   <ItemGroup>
     <Compile Include="Dependencies.fs" />
     <Compile Include="Base.fs" />
