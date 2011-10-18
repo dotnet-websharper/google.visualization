@@ -10,6 +10,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.G
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization", "if-ws-google-visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj", "{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization.Tests", "if-ws-google-visualization-tests\IntelliFactory.WebSharper.Google.Visualization.Tests.fsproj", "{979C0793-E755-4BFB-AD7E-8A968BCF9326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "web\Web.csproj", "{F453CB86-F138-4F1B-A87B-93E1B587E16F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{979C0793-E755-4BFB-AD7E-8A968BCF9326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979C0793-E755-4BFB-AD7E-8A968BCF9326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979C0793-E755-4BFB-AD7E-8A968BCF9326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979C0793-E755-4BFB-AD7E-8A968BCF9326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F453CB86-F138-4F1B-A87B-93E1B587E16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F453CB86-F138-4F1B-A87B-93E1B587E16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F453CB86-F138-4F1B-A87B-93E1B587E16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F453CB86-F138-4F1B-A87B-93E1B587E16F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

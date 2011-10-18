@@ -17,23 +17,22 @@ open IntelliFactory.WebSharper.Google.Visualization.Base
 open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
 [<AbstractClass>]
-[<Stub>]
 type Formatter() =
+    [<Stub>]
     member this.format(data: DataTable, index: int) = ()
 
-[<JavaScriptType>]
 type ArrowFormatOptions = 
     [<Inline "{base : $f}">]
     static member Base (f: float) : ArrowFormatOptions = X
 
-[<Stub>]
 [<Name "google.visualization.ArrowFormat">]
 type ArrowFormat =
     inherit Formatter
+    [<Stub>]
     new () = {}
+    [<Stub>]
     new (options: ArrowFormatOptions) = {}
 
-[<JavaScriptType>]
 type BarFormatOptions = {
 
     /// A number that is the base value to compare the cell value against. If the cell value
@@ -75,10 +74,11 @@ type BarFormatOptions = {
 /// Adds a colored bar to a numeric cell indicating whether the cell value
 /// is above or below a specified base value.
 [<Name "google.visualization.BarFormat">]
-[<Stub>]
-type BarFormat = 
+type BarFormat =
     inherit Formatter
+    [<Stub>]
     new () = {}
+    [<Stub>]
     new (options: BarFormatOptions) = {}
 
 /// Assigns colors to the foreground or background of a numeric cell, depending
@@ -88,9 +88,9 @@ type BarFormat =
 /// calling format(). Colors can be specified in any acceptable HTML format, 
 /// for example "black", "#000000", or "#000".
 [<Name "google.visualization.ColorFormat">]
-[<Stub>]
 type ColorFormat = 
     inherit Formatter
+    [<Stub>]
     new () = {}
 
     /// Specifies a foreground color and/or background color to a cell, depending on the cell
@@ -110,6 +110,7 @@ type ColorFormat =
     ///     * bgcolor - The color to apply to the background of matching cells. Values can be
     ///       either '#RRGGBB' values or defined color constants, (example: '#FF0000' or
     ///       'red').
+    [<Stub>]
     member this.addRange(from: obj, to': obj, color: string, bgcolor: string) : unit = X
 
     /// Assigns a background color from a range, according to the cell value. The color is
@@ -131,8 +132,8 @@ type ColorFormat =
     ///     * toBgColor - The background color for cells holding values at the high end of
     ///       the gradient. Values can be either '#RRGGBB' values or defined color constants,
     ///       (example: '#FF0000' or 'red').
+    [<Stub>]
     member this.addGradientRange(from: obj, to': obj, color: string, fromBgColor: string, toBgColor: string) : unit = X
-
 
 type DateFormatOptions = {
 
@@ -164,12 +165,12 @@ type DateFormatOptions = {
     static member Default : DateFormatOptions = Empty<DateFormatOptions>
 
 [<Name "google.visualization.DateFormat">]
-[<Stub>]
-type DateFormat = 
+type DateFormat =
     inherit Formatter
+    [<Stub>]
     new () = {}
+    [<Stub>]
     new (options: DateFormatOptions) = {}
-
 
 type NumberFormatOptions [<Inline "{}">] () =
 
@@ -208,16 +209,16 @@ type NumberFormatOptions [<Inline "{}">] () =
     val mutable suffix : string
 
 
-[<Stub>]
 [<Name "google.visualization.NumberFormat">]
 type NumberFormat = 
     inherit Formatter
+    [<Stub>]
     new () = {}
+    [<Stub>]
     new (options: NumberFormatOptions) = {}
 
-[<Stub>]
 [<Name "google.visualization.PatternFormat">]
-type PatternFormat(pattern: string) =
+type PatternFormat [<Stub>] (pattern: string) =
 
     /// The standard formatting call, with a few additional parameters:
     /// 
@@ -230,6 +231,9 @@ type PatternFormat(pattern: string) =
     ///     * opt_dstColumnIndex - [optional] The destination column to place the output of
     ///       the pattern manipulation. If not specified, the first element in
     ///       srcColumIndices will be used as the destination.
+    [<Stub>]
     member this.format(dataTable: DataTable, srcColumnIndices: int []) = X
+
+    [<Stub>]
     member this.format(dataTable: DataTable, srcColumnIndices: int [], opt_dstColumnIndex: int) = X
 

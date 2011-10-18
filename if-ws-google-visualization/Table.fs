@@ -17,7 +17,6 @@ open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-[<JavaScriptType>]
 /// Wrapper to set the css classes of the table.
 type TableCSSClasses = {
     /// Assigns a class name to the table header row (<tr> element).
@@ -50,14 +49,11 @@ type TableCSSClasses = {
     static member Default: TableCSSClasses = Empty<TableCSSClasses>
 
 // Wrapper for the different modes for sort and paging.
-[<JavaScriptType>]
 type EnableMode = 
     | [<Constant "enable">] Enable
     | [<Constant "event">] Event
     | [<Constant "disable">] Disable
 
-
-[<JavaScriptType>]
 type TableOptions = {
     /// If set to true, formatted values of cells that include HTML tags will be rendered as
     /// HTML. If set to false, most custom formatters will not work properly. Default false
@@ -168,36 +164,39 @@ type TableOptions = {
     [<JavaScript>] 
     static member Default: TableOptions = Empty<TableOptions>
 
-[<JavaScriptType>]
 type SortOrder = {
     column: float
     ascending: bool
     sortedIndexes: float []
 }
 
-[<Stub>]
 [<Name "google.visualization.Table">]
 [<Require(typeof<Dependencies.Table>)>]
 type Table =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the table.
+    [<Stub>]
     member this.draw(data: DataCommon, options: TableOptions) : unit = X
 
     /// Standard getSelection implementation. Selection elements are
     /// all row elements. Can return more than one selected row. The row
     /// indexes in the selection object refer to the original data table
     /// regardless of any user interaction (sort, paging, etc.).
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Call this method to retrieve information about the current
     /// sort state of a table that has been sorted (typically by the
     /// user, who has clicked on a column heading to sort the rows by a
     /// specific column).
+    [<Stub>]
     member this.getSortOrder() : SortOrder = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X

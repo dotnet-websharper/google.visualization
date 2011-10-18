@@ -7,10 +7,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{979c0793-e755-4bfb-ad7e-8a968bcf9326}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <Name>IntelliFactory.WebSharper.Google.Visualization.Samples</Name>
+    <Name>IntelliFactory.WebSharper.Google.Visualization.Tests</Name>
     <RootNamespace>$(Name)</RootNamespace>
     <AssemblyName>$(Name)</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +31,7 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\$(Name).XML</DocumentationFile>
   </PropertyGroup>
-  <Import Project="$(INTELLIFACTORY)/build/IntelliFactory.FSharp.targets" />
-  <PropertyGroup>
-    <WEBSHARPER_HOME>$(IfIvyLibDir)</WEBSHARPER_HOME>
-  </PropertyGroup>
-  <Import Project="$(WEBSHARPER_HOME)/IntelliFactory.WebSharper.targets" Condition="Exists('$(WEBSHARPER_HOME)/IntelliFactory.WebSharper.targets')" />
+  <Import Project="..\.build\lib\IntelliFactory.WebSharper.targets" />
   <ItemGroup>
     <Compile Include="Samples.fs" />
   </ItemGroup>
@@ -50,15 +46,12 @@
     <Reference Include="IntelliFactory.Html" />
     <Reference Include="IntelliFactory.WebSharper.Html" />
     <Reference Include="IntelliFactory.WebSharper.Ecma" />
-    <Reference Include="IntelliFactory.Json" />
-    <Reference Include="IntelliFactory.WebSharper.Json" />
     <Reference Include="IntelliFactory.WebSharper.Dom" />
     <Reference Include="IntelliFactory.WebSharper.JQuery" />
     <Reference Include="IntelliFactory.WebSharper.Web" />
-
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IntelliFactory.WebSharper.Google.Visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj">
+    <ProjectReference Include="..\if-ws-google-visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj">
       <Name>IntelliFactory.WebSharper.Google.Visualization</Name>
       <Project>{5c51a0a3-3d37-4e05-af95-2fce77b4dfa8}</Project>
       <Private>True</Private>

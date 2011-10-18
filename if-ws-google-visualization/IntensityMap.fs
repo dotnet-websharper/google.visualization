@@ -20,7 +20,6 @@ open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 /// Dummy type for the possible regions. 
 /// the IM prefix stands for Intensity map because the geomap already
 /// uses the "Region" name.
-[<JavaScriptType>]
 type IMRegion =
     | [< Constant "world">]  World
     | [< Constant "africa">]  Africa
@@ -30,7 +29,6 @@ type IMRegion =
     | [< Constant "south_america">]  SouthAmerica
     | [< Constant "usa">]  USA
 
-[<JavaScriptType>]
 type IntensityMapOptions = {
 
     /// The colors to use for each tab.
@@ -76,18 +74,21 @@ type IntensityMapOptions = {
     static member Default : IntensityMapOptions = Empty<IntensityMapOptions>
 
 /// An intensity map that highlights regions or countries based on relative values 
-[<Stub>]
 [<Name "google.visualization.IntensityMap">]
 [<Require(typeof<Dependencies.IntensityMap>)>]
 type IntensityMap =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: IntensityMapOptions) : unit = X
 
     /// Standard getSelection() implementation. Supports only selection of a single column.
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Standard setSelection() implementation. Supports only selection of a single column. 
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X

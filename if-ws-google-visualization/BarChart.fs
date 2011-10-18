@@ -19,7 +19,7 @@ open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
 
 // Dummy type for colors used that posess the is3D property.
-type Color3D [<Inline "">] private () =
+type Color3D [<Inline "({})">] private () =
 
     [<DefaultValue>]
     val mutable private color : string
@@ -118,24 +118,27 @@ type BarChartOptions = {
 /// SVG or VML. Displays tips when clicking on points. Animates lines
 /// when clicking on legend entries. For a vertical version of this 
 /// chart, see the Column Chart.
-[<Stub>]
 [<Name "google.visualization.BarChart">]
 [<Require(typeof<Dependencies.CoreChart>)>]
 type BarChart =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: BarChartOptions) : unit = X
 
     /// Standard getSelection implementation. Selection elements are
     /// all row elements. Can return more than one selected row. The row
     /// indexes in the selection object refer to the original data table
     /// regardless of any user interaction (sort, paging, etc.).
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X

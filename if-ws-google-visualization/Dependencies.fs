@@ -15,30 +15,25 @@ open System
 open System.Configuration
 open IntelliFactory.WebSharper
 
-module R = IntelliFactory.WebSharper.Resources
+module R = IntelliFactory.WebSharper.Core.Resources
 
 /// Requires the Google JS API.
+[<Sealed>]
 type JsApi() =
-    static let resource : R.Resource =
-        {
-            Id              = "Google.JsAPI"
-            Dependencies    = []
-            Body            =
-                R.ScriptBody (
-                    R.ExternalLocation [
-                        R.ConfigurablePart("Google.JsAPI",
-                            "http://www.google.com/jsapi")
-                        R.FixedPart "?key="
-                        R.ConfigurablePart("google.jsapi.key",
-                            "your-key-here")
-                    ]
-                )
-        }
-
-    static member Resource = resource
-
-    interface Resources.IResourceDefinition with
-        member this.Resource = resource
+    interface R.IResource with
+        member this.Render ctx html =
+            let src =
+                String.concat "" [
+                    defaultArg (ctx.GetSetting "Google.JsAPI")
+                        "http://www.google.com/jsapi"
+                    "?key="
+                    defaultArg (ctx.GetSetting "google.jsapi.key")
+                        "your-key-here"
+                ]
+            html.AddAttribute("type", "text/javascript")
+            html.AddAttribute("src", src)
+            html.RenderBeginTag "script"
+            html.RenderEndTag()
 
 namespace IntelliFactory.WebSharper.Google.Visualization
 
@@ -50,59 +45,64 @@ module Dependencies =
     open IntelliFactory.WebSharper.Google.JsApi
     module R = IntelliFactory.WebSharper.Resources
 
+    let private render (html: System.Web.UI.HtmlTextWriter) (code: string) =
+        html.AddAttribute("type", "text/javascript")
+        html.RenderBeginTag "script"
+        html.WriteLine code
+        html.RenderEndTag()
+
+    [<Sealed>]
     type Visualization() =
-        interface Resources.IResourceDefinition with
-            member this.Resource =
-                {
-                    Id = "Google.Visualization"
-                    Dependencies = []
-                    Body =
-                        let code = "google.load('visualization', '1');"
-                        R.CodeBody [R.FixedPart code]
-                }
+        interface R.IResource with
+            member this.Render ctx html =
+                render html "google.load('visualization', '1');"
 
     [<AbstractClass>]
-    type BaseResourceDefinition(id: string, package: string) =
-        interface Resources.IResourceDefinition with
-            member this.Resource =
-                {
-                    Id              = id
-                    Dependencies    = [JsApi.Resource]
-                    Body            =
-                        let code =
-                            String.Format("google.load(\"visualization\",\
-                                \"1\", {{packages:[\"{0}\"]}});", package)
-                        R.CodeBody [R.FixedPart code]
-                }
+    type BaseResourceDefinition(package: string) =
+        interface R.IResource with
+            member this.Render ctx html =
+                String.Format("google.load(\"visualization\",\
+                    \"1\", {{packages:[\"{0}\"]}});", package)
+                |> render html
 
     type internal B = BaseResourceDefinition
 
+    [<Require(typeof<JsApi>)>]
     type Table() =
-        inherit B("Table", "table")
+        inherit B("table")
 
+    [<Require(typeof<JsApi>)>]
     type AnnotatedTimeLine() =
-        inherit B("AnnotatedTimeLine", "annotatedtimeline")
+        inherit B("annotatedtimeline")
 
+    [<Require(typeof<JsApi>)>]
     type AreaChart() =
-        inherit B("AreaChart", "corechart")
+        inherit B("corechart")
 
+    [<Require(typeof<JsApi>)>]
     type Gauge() =
-        inherit B("Gauge", "gauge")
+        inherit B("gauge")
 
+    [<Require(typeof<JsApi>)>]
     type CoreChart() =
-        inherit B("CoreChart", "corechart")
+        inherit B("corechart")
 
+    [<Require(typeof<JsApi>)>]
     type GeoMap() =
-        inherit B("GeoMap", "geomap")
+        inherit B("geomap")
 
+    [<Require(typeof<JsApi>)>]
     type IntensityMap() =
-        inherit B("IntensityMap", "intensitymap")
+        inherit B("intensitymap")
 
+    [<Require(typeof<JsApi>)>]
     type MotionChart() =
-        inherit B("MotionChart", "motionchart")
+        inherit B("motionchart")
 
+    [<Require(typeof<JsApi>)>]
     type OrgChart() =
-        inherit B("OrgChart", "orgchart")
+        inherit B("orgchart")
 
+    [<Require(typeof<JsApi>)>]
     type TreeMap() =
-        inherit B("TreeMap", "treemap")
+        inherit B("treemap")

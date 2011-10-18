@@ -127,24 +127,27 @@ type AreaChartOptions = {
 /// An area chart that is rendered within the browser using SVG or VML. 
 /// Displays tips when clicking on points. Animates lines when clicking 
 /// on legend entries. 
-[<Stub>]
 [<Name "google.visualization.AreaChart">]
 [<Require(typeof<Dependencies.AreaChart>)>]
 type AreaChart =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: AreaChartOptions) : unit = X
 
     /// Standard getSelection implementation. Selection elements are
     /// all row elements. Can return more than one selected row. The row
     /// indexes in the selection object refer to the original data table
     /// regardless of any user interaction (sort, paging, etc.).
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X
