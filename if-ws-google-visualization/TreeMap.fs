@@ -17,8 +17,6 @@ open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-
-[<JavaScriptType>]
 type TreeMapOptions [<Inline "{}">] () =
     /// The color of the header section for each node. Specify an HTML color value.
     [<DefaultValue>]
@@ -134,32 +132,38 @@ type TreeMapOptions [<Inline "{}">] () =
 /// specify optional hovertext for regions. The map is rendered in the browser using
 /// an embedded Flash player. Note that the map is not scrollable or draggable, but 
 /// can be configured to allow zooming.
-[<Stub>]
 [<Name "google.visualization.TreeMap">]
 [<Require(typeof<Dependencies.TreeMap>)>]
 type TreeMap =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: TreeMapOptions) : unit = X
 
     /// Standard getSelection implementation. Selection elements are
     /// all row elements. Can return more than one selected row. The row
     /// indexes in the selection object refer to the original data table
     /// regardless of any user interaction (sort, paging, etc.).
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X
 
     /// Move up the tree by one level and redraw it. Does not throw an 
     /// error if the node is the root node. This is fired automatically 
     /// when the user right-clicks a node.
+    [<Stub>]
     member this.goUpAndDraw() : unit = X
 
     /// Returns the maximum possible depth for the current view.
+    [<Stub>]
     member this.getMaxPossibleDepth() : unit = X
+

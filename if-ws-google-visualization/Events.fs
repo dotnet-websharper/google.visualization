@@ -30,7 +30,6 @@ module Events =
         listen<'T> target eventName ev.Trigger
         ev.Publish
 
-    [<JavaScriptType>]
     type AnnotatedTimeLine =
 
         /// Zoom range changed. Fired after the user modified the visible
@@ -54,15 +53,13 @@ module Events =
         /// in the data table is selected. The visualization then fires this event.
         static member Select (visualization: Visualizations.AnnotatedTimeLine) = 
             event<unit> visualization "select"
-    
-    [<JavaScriptType>]
+
     /// Wrapper for onmouse_ events args.
     type RowColumnIndexes = {
         row : int
         column : int
     }
 
-    [<JavaScriptType>]
     type AreaChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -93,7 +90,6 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.AreaChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type BarChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -124,7 +120,6 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.BarChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type ColumnChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -155,7 +150,6 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.ColumnChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type LineChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -186,7 +180,6 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.LineChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type PieChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -217,7 +210,6 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.PieChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type ScatterChart =
         
         /// The chart is ready for external method calls. If you want to interact with
@@ -248,12 +240,10 @@ module Events =
         static member OnMouseOut (visualization: Visualizations.ScatterChart) = 
             event<RowColumnIndexes> visualization "onmouseout"
 
-    [<JavaScriptType>]
     type RegionClickArgs = {
         region : string
     }
 
-    [<JavaScriptType>]
     type GeoMap =
         
         /// Fired when the user clicks a region with an assigned value. To learn 
@@ -290,7 +280,6 @@ module Events =
         static member DrawingDone (visualization: Visualizations.GeoMap) = 
             event<unit> visualization "drawingDone"
 
-    [<JavaScriptType>]
     type IntensityMap =
         [<JavaScript>]
         /// Standard select event
@@ -305,7 +294,6 @@ module Events =
         static member Ready (visualization: Visualizations.IntensityMap) = 
             event<unit> visualization "Ready"
 
-    [<JavaScriptType>]
     type MotionChart =
 
         /// The chart is ready for external method calls. If you want to interact with the chart,
@@ -321,18 +309,15 @@ module Events =
         static member StateChange (visualization: Visualizations.MotionChart) = 
             event<unit> visualization "statechange"
 
-    [<JavaScriptType>]
     type CollapseEventArgs = {
         collapsed : bool
         row : int
     }
 
-    [<JavaScriptType>]
     type Row = {
         row : int
     }
 
-    [<JavaScriptType>]
     type OrgChart =
         /// Event triggered when allowCollapse is set to true and the user double clicks on a
         /// node with children.
@@ -363,20 +348,17 @@ module Events =
         static member Ready (visualization: Visualizations.OrgChart) = 
             event<unit> visualization "ready"
 
-    [<JavaScriptType>]
     type PageArgs = {
         page : int
     }
 
-    [<JavaScriptType>]
     type SortArgs = {
         column : int
         ascending : bool
         sortedIndexes : int []
     }
 
-    [<JavaScriptType>]
-    type Table = 
+    type Table =
 
         /// The chart is ready for external method calls. If you want to interact with the chart,
         /// and call methods after you draw it, you should set up a listener for this event before
@@ -400,7 +382,6 @@ module Events =
         static member Sort (visualization: Visualizations.Table) = 
             event<SortArgs> visualization "sort"
 
-    [<JavaScriptType>]
     type TreeMap = 
 
         /// The chart is ready for external method calls. If you want to interact with the chart,

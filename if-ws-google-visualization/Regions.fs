@@ -17,19 +17,14 @@ open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-
 /// Dummy type to simulate the region enumeration.
-[<JavaScriptType>]
-type Region = class 
+type Region =
     [<Inline "$s">]
     static member FromString (s: string) : Region = X
-end
 
-[<JavaScriptType>]
 module Countries =
 
     // ISO 3166-1 alpha-2 Codes.
-    [<JavaScriptType>]
     module Alpha2Codes =
         /// Afghanistan
         [<Inline "'AF'" >]
@@ -1016,7 +1011,6 @@ module Countries =
         let ZW : Region = X
 
 /// Other regions supported by the GeoMap
-[<JavaScriptType>]
 module Other =
     [<Inline "'world'" >]
     let World : Region = X

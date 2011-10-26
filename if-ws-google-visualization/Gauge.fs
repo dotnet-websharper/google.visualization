@@ -84,12 +84,13 @@ type GaugeOptions = {
 
 
 /// One or more gauges are rendered within the browser using SVG or VML. 
-[<Stub>]
 [<Name "google.visualization.Gauge">]
 [<Require(typeof<Dependencies.Gauge>)>]
 type Gauge =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: GaugeOptions) : unit = X

@@ -17,7 +17,6 @@ open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-[<JavaScriptType>]
 type MotionChartOptions = {
 
     /// Height of the chart in pixels.
@@ -70,18 +69,20 @@ type MotionChartOptions = {
 
 /// A dynamic chart to explore several indicators over time. The chart is rendered within 
 /// the browser using Flash.
-[<Stub>]
 [<Name "google.visualization.MotionChart">]
 [<Require(typeof<Dependencies.MotionChart>)>]
 type MotionChart =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: MotionChartOptions) : unit = X
 
     /// Returns the current state of the motionchart, serialized to a JSON string. To assign
     /// this state to the chart, assign this string to the state option in the draw() method. 
     /// This is often used to specify a custom chart state on startup, instead of using the 
     /// default state.
+    [<Stub>]
     member this.getState() : string = X

@@ -13,7 +13,7 @@
 // And the examples in the visualization gallery.
 // http://code.google.com/apis/visualization/documentation/gallery.html
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Samples
+namespace IntelliFactory.WebSharper.Google.Visualization.Tests
 
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Html

@@ -77,13 +77,13 @@ type SortType [<Inline "{}">] private () =
         new SortType(column = column, desc = desc)
 
 /// Dummy type that contains common functions of DataTable and DataView
-[<Stub>]
-type DataCommon() =
+type DataCommon [<Stub>] () =
 
     /// Returns the identifier of a given column specified by the column index in the
     /// underlying table For data tables that are retrieved by queries, the column identifier
     /// is set by the data source, and can be used to refer to columns when using the query
     /// language.
+    [<Stub>]
     member this.getColumnId(columnIndex: int) : string = X
 
     /// Returns the label of a given column specified by the column index in the underlying
@@ -91,6 +91,7 @@ type DataCommon() =
     /// example the column label can be displayed as a column header in a table, or as the
     /// legend label in a pie chart.  For data tables that are retrieved by queries, the
     /// column label is set by the data source, or by the label clause of the query language.
+    [<Stub>]
     member this.getColumnLabel(columnIndex) : string = X
 
     /// Returns the formatting pattern used to format the values of the specified column.
@@ -101,6 +102,7 @@ type DataCommon() =
     /// For data tables that are retrieved by queries, The column pattern is set by the data
     /// source, or by the format clause of the query language. An example of a pattern is
     /// '#,##0.00'. For more on patterns see the query language reference.
+    [<Stub>]
     member this.getColumnPattern(columnIndex) : string = X
 
     /// Returns the value of a named property, or null if no such property is set for the
@@ -109,6 +111,7 @@ type DataCommon() =
     ///     * columnIndex should be a number greater than or equal to zero, and less than the
     ///       number of columns as returned by the getNumberOfColumns() method.  
     ///     * name is the property name, as a string.
+    [<Stub>]
     member this.getColumnProperty(columnIndex: int, name: string) : obj = X
 
     /// Returns the minimal and maximal values of values in a specified column. The returned
@@ -117,6 +120,7 @@ type DataCommon() =
     /// 
     /// columnIndex should be a number greater than or equal to zero, and less than the
     /// number of columns as returned by the getNumberOfColumns() method.
+    [<Stub>]
     member this.getColumnRange(columnIndex: int) : obj = X
 
     /// Returns the type of a given column specified by the column index.
@@ -126,8 +130,8 @@ type DataCommon() =
     /// 
     /// The returned column type can be one of the following: 'string' 'number' 'boolean'
     /// 'date' 'datetime' 'timeofday'
+    [<Stub>]
     member this.getColumnType(columnIndex: int) : ColumnType = X
-
 
     /// Returns the unique values in a certain column, in ascending order.
     /// 
@@ -135,6 +139,7 @@ type DataCommon() =
     ///       number of columns as returned by the getNumberOfColumns() method.
     /// 
     /// The type of the returned objects is the same as that returned by the getValue method.
+    [<Stub>]
     member this.getDistinctValues(index: int) : obj [] = X
 
     /// Returns the row indexes for rows that match all of the given filters. The indexes
@@ -157,6 +162,7 @@ type DataCommon() =
     ///           o maxValue - A maximum value for the cell. The cell value in the specified
     ///           column must be less than or equal to this value.
     /// 
+    [<Stub>]
     member this.getFilteredRows(filters: obj []) : int [] = X
 
     /// Returns the formatted value of the cell at the given row and column indexes.
@@ -167,12 +173,15 @@ type DataCommon() =
     ///     * ColumnIndex should be a number greater than or equal to zero, and less than the
     ///       number of columns as returned by the getNumberOfColumns() method.
     /// 
+    [<Stub>]
     member this.getFormattedValue(rowIndex: int, columnIndex: int) : string = X
 
     /// Returns the number of columns in the table
+    [<Stub>]
     member this.getNumberOfColumns() : int = X
 
     /// Returns the number of rows in the table.
+    [<Stub>]
     member this.getNumberOfRows() : int = X
 
     /// Returns a map of all the properties for the specified cell. Note that the properties
@@ -181,6 +190,7 @@ type DataCommon() =
     /// 
     ///     * rowIndex is the cell's row index.
     ///     * columnIndex is the cell's column index.
+    [<Stub>]
     member this.getProperties(rowIndex: int, columnIndex: int) : int = X
 
     /// Returns the value of a named property, or null if no such property is set for the
@@ -193,6 +203,7 @@ type DataCommon() =
     ///       number of columns as returned by the getNumberOfColumns() method.
     /// 
     ///     * name is a string with the property name.
+    [<Stub>]
     member this.getProperty(rowIndex: int, columnIndex: int, name: string) : obj = X
 
     /// Returns the value of a named property, or null if no such property is set for the
@@ -202,6 +213,7 @@ type DataCommon() =
     ///       number of rows as returned by the getNumberOfRows() method.
     /// 
     ///     * name is a string with the property name.
+    [<Stub>]
     member this.getRowProperty(rowIndex: int, name: string) : obj = X
 
     /// Returns a sorted version of the table without modifying the order of the underlying
@@ -235,9 +247,13 @@ type DataCommon() =
     /// Note that the sorting is guaranteed to be stable: this means that if you sort on
     /// equal values of two rows, the same sort will return the rows in the same order every
     /// time.
+    [<Stub>]
     member this.getSortedRows(sortColumn: int) : int [] = X
+    [<Stub>]
     member this.getSortedRows(sortColumns: int []) : int [] = X
+    [<Stub>]
     member this.getSortedRows(sortColumn: SortType) : int [] = X
+    [<Stub>]
     member this.getSortedRows(sortColumns: SortType[]) : int [] = X
 
 
@@ -245,6 +261,7 @@ type DataCommon() =
     /// table. The return type varies, depending on the property.
     /// 
     ///     * name is a string with the property name.
+    [<Stub>]
     member this.getTableProperty(name: string) : obj = X
 
     /// Returns the value of the cell at the given row and column indexes.
@@ -264,6 +281,7 @@ type DataCommon() =
     ///       [hour, minute, second, millisenconds].
     ///     * If the column value is a null value, regardless of the column type, the
     ///       returned value is null.
+    [<Stub>]
     member this.getValue(rowIndex: float, columnIndex: float) : obj = X
 
 /// Represents a two-dimensional, mutable table of values. To make a read-only copy of a
@@ -277,14 +295,14 @@ type DataCommon() =
 /// lets you assign an inline CSS style string to the rendered table cell. A
 /// visualization should describe in its documentation any custom properties that it
 /// supports.
-[<Stub>]
 [<Name "google.visualization.DataTable">]
-type DataTable = 
+type DataTable =
     inherit DataCommon
     /// Creates an empty DataTable instance. Use JavaScript to populate the DataTable as
     /// shown in the following example, which creates and populates a two column, three row
     /// DataTable in JavaScript. You might use this on a page hosting a visualization to
     /// create the data for that visualization.
+    [<Stub>]
     new () = {}
 
     /// Creates a DataTable populated with the data that you pass in. You can see an example
@@ -303,6 +321,7 @@ type DataTable =
     ///     current version is 0.6.
     /// 
     // TODO: Data can be also an object.
+    [<Stub>]
     new (data: string, version: float) = {}
 
     /// Returns a map of all properties for the specified column. Note that the properties
@@ -310,8 +329,9 @@ type DataTable =
     /// them in the DataTable.
     /// 
     ///     * columnIndex is the numeric index of the column to retrieve properties for.
+    [<Stub>]
     member this.getColumnProperties(columnIndex) : obj = X
-    
+
     /// Adds a new column to the data table, and returns the index of the new column. All the
     /// cells of the new column are assigned a null value.
     /// 
@@ -324,6 +344,7 @@ type DataTable =
     ///       empty string is assigned.  
     ///     * id should be a string with a unique identifier for the column. If not value is 
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.addColumn(t: ColumnType) : float = X
 
     /// Returns a map of all properties for the specified row. Note that the properties
@@ -331,6 +352,7 @@ type DataTable =
     /// them in the DataTable.
     /// 
     ///     * rowIndex is the index of the row to retrieve properties for.
+    [<Stub>]
     member this.getRowProperties(rowIndex: float) : obj = X
 
     /// Adds a new column to the data table, and returns the index of the new column. All the
@@ -345,6 +367,7 @@ type DataTable =
     ///       empty string is assigned.  
     ///     * id should be a string with a unique identifier for the column. If not value is 
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.addColumn(t: ColumnType, label: string) : float = X
 
     /// Adds a new column to the data table, and returns the index of the new column. All the
@@ -359,6 +382,7 @@ type DataTable =
     ///       empty string is assigned.  
     ///     * id should be a string with a unique identifier for the column. If not value is 
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.addColumn(t: ColumnType, label: string, id: string) : float = X
 
     /// Adds a new row to the data table, and returns the index of the new row.
@@ -370,6 +394,7 @@ type DataTable =
     ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
     ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
     ///       same method call). Use null or an empty array entry for an empty cell.
+    [<Stub>]
     member this.addRow() : float = X
 
     /// Adds a new row to the data table, and returns the index of the new row.
@@ -381,6 +406,7 @@ type DataTable =
     ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
     ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
     ///       same method call). Use null or an empty array entry for an empty cell.
+    [<Stub>]
     member this.addRow(cellArray: Cell []) : float = X
 
     /// Adds new rows to the data table, and returns the index of the last added row. You can
@@ -391,6 +417,7 @@ type DataTable =
     ///           o Array - An array of row objects used to populate a set of new rows. Each
     ///           row is an object as described in addRow(). Use null or an empty array entry
     ///           for an empty cell.
+    [<Stub>]
     member this.addRows(num: int) : float = X
 
     /// Adds new rows to the data table, and returns the index of the last added row. You can
@@ -401,19 +428,20 @@ type DataTable =
     ///           o Array - An array of row objects used to populate a set of new rows. Each
     ///           row is an object as described in addRow(). Use null or an empty array entry
     ///           for an empty cell.
+    [<Stub>]
     member this.addRows(cells: Cell [] []) : float = X
 
     /// Returns a clone of the data table. The result is a deep copy of the data table except
     /// for the cell properties, row properties, table properties and column properties,
     /// which are shallow copies; this means that non-primitive properties are copied by
     /// reference, but primitive properties are copied by value
+    [<Stub>]
     member this.clone() : DataTable = X
-
 
     // CHECK: Does it really uses ()?
     /// Returns a map of all properties for the table.
+    [<Stub>]
     member this.getTableProperties() : obj = X
-
 
     /// Inserts a new column to the data table, at the specifid index. All existing columns
     /// at or after the specified index are shifted to a higher index.
@@ -427,6 +455,7 @@ type DataTable =
     ///       specified, an empty string is assigned.
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.insertColumn(columnIndex: float, t: string) : unit = X
 
     /// Inserts a new column to the data table, at the specifid index. All existing columns
@@ -441,6 +470,7 @@ type DataTable =
     ///       specified, an empty string is assigned.
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.insertColumn(columnIndex: float, t: string, label: string) : unit = X
 
     /// Inserts a new column to the data table, at the specifid index. All existing columns
@@ -455,6 +485,7 @@ type DataTable =
     ///       specified, an empty string is assigned.
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
+    [<Stub>]
     member this.insertColumn(columnIndex: float, t: ColumnType, label: string, id: string) : unit = X
 
     /// Insert the specified number of rows at the specified row index.
@@ -465,6 +496,7 @@ type DataTable =
     ///     * numberOrArray is either a number of new, empty rows to add, or an array of one
     ///       or more populated rows to add at the index. See addRows() for the syntax for
     ///       adding an array of row objects.
+    [<Stub>]
     member this.insertRows(rowIndex: float, number: float) : unit = X
 
     /// Insert the specified number of rows at the specified row index.
@@ -475,28 +507,33 @@ type DataTable =
     ///     * numberOrArray is either a number of new, empty rows to add, or an array of one
     ///       or more populated rows to add at the index. See addRows() for the syntax for
     ///       adding an array of row objects.
+    [<Stub>]
     member this.insertRows(rowIndex: float, arr: Cell[]) : unit = X
 
     /// Removes the column at the specified index.
     /// 
     ///     * columnIndex should be a number with a valid column index.
+    [<Stub>]
     member this.removeColumn(columnIndex: float) : unit = X
 
     /// Removes the specified number of columns starting from the column at the specified index.
     /// 
     ///     * numberOfColumns is the number of columns to remove.
     ///     * columnIndex should be a number with a valid column index.
+    [<Stub>]
     member this.removeColumns(columnIndex: float, numberOfColumns: float) : unit = X
 
     /// Removes the row at the specified index.
     /// 
     ///     * rowIndex should be a number with a valid row index.
+    [<Stub>]
     member this.removeRow(rowIndex: float) : unit = X
 
     /// Removes the specified number of rows starting from the row at the specified index.
     /// 
     ///     * numberOfRows is the number of rows to remove.
     ///     * rowIndex should be a number with a valid row index.
+    [<Stub>]
     member this.removeRows(rowIndex: float, numberOfRows: float) : unit = X
 
     /// Sets the value, formatted value, and/or properties, of a cell.
@@ -533,13 +570,17 @@ type DataTable =
     ///       row, column, or cell properties to modify their display or behavior; see the
     ///       visualization documentation to see what properties are supported.
     /// 
+    [<Stub>]
     member this.setCell(rowIndex: int, columnIndex: int) : unit = X
 
     /// Ibid
+    [<Stub>]
     member this.setCell(rowIndex: int, columnIndex: int, value: obj) : unit = X
     /// Ibid
+    [<Stub>]
     member this.setCell(rowIndex: int, columnIndex: int, value: obj, formattedValue: string) : unit = X
     /// Ibid
+    [<Stub>]
     member this.setCell(rowIndex: int, columnIndex: int, value: obj, formattedValue: string, properties: obj) : unit = X
 
     /// Sets the label of a column.
@@ -551,6 +592,7 @@ type DataTable =
     ///       typically displayed as part of the visualization. For example the column label
     ///       can be displayed as a column header in a table, or as the legend label in a pie
     ///       chart.
+    [<Stub>]
     member this.setColumnLabel(columnIndex: float, label: string) : unit = X
 
     /// Sets a single column property. Some visualizations support row, column, or cell
@@ -562,6 +604,7 @@ type DataTable =
     ///     * name is a string with the property name.
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified column.
+    [<Stub>]
     member this.setColumnProperty(columnIndex: float, name: string, value: obj) : unit = X
 
     /// Sets multiple column properties. Some visualizations support row, column, or cell
@@ -574,6 +617,7 @@ type DataTable =
     ///     * properties is an Object (name/value map) with additional properties for this
     ///       column. If null is specified, all additional properties of the column will be
     ///       removed.
+    [<Stub>]
     member this.setColumnProperties(columnIndex: float, properties: obj) : unit = X
 
     /// Sets the formatted value of a cell.
@@ -588,6 +632,7 @@ type DataTable =
     ///       value and have the API apply default formatting to the cell value as needed,
     ///       set it formattedValue null; to explicitly set an empty formatted value, set it
     ///       to an empty string.
+    [<Stub>]
     member this.setFormattedValue(rowIndex: float, columnIndex: float, formattedValue: string) : unit = X
 
     /// Sets a cell property. Some visualizations support row, column, or cell properties to
@@ -604,6 +649,7 @@ type DataTable =
     /// 
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified cell.
+    [<Stub>]
     member this.setProperty(rowIndex:float , columnIndex: float, name: string, value: obj) : unit = X
 
     /// Sets multiple cell properties. Some visualizations support row, column, or cell
@@ -619,6 +665,7 @@ type DataTable =
     ///     * properties is an Object (name/value map) with additional properties for this
     ///       cell. If null is specified, all additional properties of the cell will be
     ///       removed.
+    [<Stub>]
     member this.setProperties(rowIndex: float, columnIndex: float, properties: obj) : unit = X
 
     /// Sets a row property. Some visualizations support row, column, or cell properties to
@@ -632,6 +679,7 @@ type DataTable =
     /// 
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified row.
+    [<Stub>]
     member this.setRowProperty(rowIndex: float, name: string, value: obj) : unit = X
 
     /// Sets multiple row properties. Some visualizations support row, column, or cell
@@ -644,6 +692,7 @@ type DataTable =
     ///     * properties is an Object (name/value map) with additional properties for this
     ///       row. If null is specified, all additional properties of the row will be
     ///       removed.
+    [<Stub>]
     member this.setRowProperties(rowIndex: float, properties: obj) : unit = X
 
     /// Sets a single table property. Some visualizations support table, row, column, or cell
@@ -652,8 +701,8 @@ type DataTable =
     /// 
     ///     * name is a string with the property name.
     ///     * value is a value of any type to assign to the specified named property of the table.
+    [<Stub>]
     member this.setTableProperty(name: string, value: obj) : unit = X
-
 
     /// Sets multiple table table. Some visualizations support table, row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -662,6 +711,7 @@ type DataTable =
     ///     * properties is an Object (name/value map) with additional properties for the
     ///       table. If null is specified, all additional properties of the table will be
     ///       removed.
+    [<Stub>]
     member this.setTableProperties(properties: obj) : unit = X
 
     /// Sets the value of a cell. In addition to overwriting any existing cell value, this
@@ -684,16 +734,19 @@ type DataTable =
     ///           o If the column type is 'timeofday', the value should be an array of four
     ///           numbers: [hour, minute, second, millisenconds].
     ///           o For any column type, the value can be set to null.
+    [<Stub>]
     member this.setValue(rowIndex: int, columnIndex: int, value: obj) : unit = X
 
     /// Sorts the rows, according to the specified sort columns. The DataTable is modified by
     /// this method. See getSortedRows() for a description of the sorting details. This
     /// method does not return the sorted data.
     // TODO: the doc is not clear about the datatype of the arg.
+    [<Stub>]
     member this.sort(sortColumns: obj) : unit = X
 
     /// Returns a JSON representation of the DataTable that can be passed into the DataTable
     /// constructor.  Format of the Constructor's JavaScript Literal data Parameter
+    [<Stub>]
     member this.toJSON() : string = X
 
 type TextStyle [<Inline "{}">] () =
@@ -751,29 +804,32 @@ type Axis [<Inline "{}">] () =
     /// How many horizontal axis labels to show, where 1 means show every label, 2 means show every other label, and so on. Default is to try to show as many labels as possible without overlapping.
     val mutable showTextEvery : int
 
-[<Stub>]
 [<Name "google.visualization.DataView">]
-type DataView = 
+type DataView =
 
     inherit DataCommon
 
+    [<Stub>]
     new (data: DataCommon) = {}
 
     /// Returns a string representation of this DataView. This string does not contain the
     /// actual data; it only contains the DataView-specific settings such as visible rows and
     /// columns. You can store this string and pass it to the static DataView.fromJSON()
     /// constructor to recreate this view. This won't include generated columns.
+    [<Stub>]
     member this.toJSON() : string = X
 
     /// Returns the index in the underlying table (or view) of a given column specified by
     /// its index in this view. viewColumnIndex should be a number greater than or equal to
     /// zero, and less than the number of columns as returned by the getNumberOfColumns()
     /// method. Returns -1 if this is a generated column.
+    [<Stub>]
     member this.getTableColumnIndex(viewColumnIndex: int) : int = X
 
     /// Returns the index in the underlying table (or view) of a given row specified by its
     /// index in this view. viewRowIndex should be a number greater than or equal to zero,
     /// and less than the number of rows as returned by the getNumberOfRows() method.
+    [<Stub>]
     member this.getTableRowIndex(viewRowIndex: int) : int = X
 
     /// Returns the index in this view that maps to a given column specified by its index in
@@ -782,10 +838,12 @@ type DataView =
     /// returns -1. tableColumnIndex should be a number greater than or equal to zero, and
     /// less than the number of columns as returned by the getNumberOfColumns() method of the
     /// underlying table/view.
+    [<Stub>]
     member this.getViewColumnIndex(tableColumnIndex: int) : int = X
 
     /// Returns the columns in this view, in order. That is, if you call setColumns with some
     /// array, and then call getViewColumns() you should get an identical array.
+    [<Stub>]
     member this.getViewColumns() : int [] = X
 
     /// Returns the index in this view that maps to a given row specified by its index in the
@@ -794,10 +852,12 @@ type DataView =
     /// returns -1. tableRowIndex should be a number greater than or equal to zero, and less
     /// than the number of rows as returned by the getNumberOfRows() method of the underlying
     /// table/view.
+    [<Stub>]
     member this.getViewRowIndex(tableRowIndex: int) : int = X
 
     /// Returns the rows in this view, in order. That is, if you call setRows with some
     /// array, and then call getViewRows() you should get an identical array.
+    [<Stub>]
     member this.getViewRows() : int [] = X
 
     /// Hides the specified columns from the current view. columnIndexes is an array of
@@ -807,11 +867,13 @@ type DataView =
     /// when you iterate through them. Entering an index number for a column already hidden
     /// is not an error, but entering an index that does not exist in the underlying
     /// table/view will throw an error. To unhide columns, call setColumns().
+    [<Stub>]
     member this.hideColumns(indexes: int []) : unit = X
 
     /// Hides all rows with indexes that lie between min and max (inclusive) from the current
     /// view. This is a convenience syntax for hideRows(rowIndexes) above. For example,
     /// hideRows(5, 10) is equivalent to hideRows([5, 6, 7, 8, 9, 10]).
+    [<Stub>]
     member this.hideRows(min: int, max: int) : unit = X
 
     /// Hides the specified rows from the current view. rowIndexes is an array of numbers
@@ -821,6 +883,7 @@ type DataView =
     /// number for a row already hidden is not an error, but entering an index that does not
     /// exist in the underlying table/view will throw an error. To unhide rows, call
     /// setRows().
+    [<Stub>]
     member this.hideRows(rowIndexes : int []) : unit = X
 
     /// Specifies which columns are visible in this view. Any columns not specified will be
@@ -849,14 +912,17 @@ type DataView =
     /// function myFunc(dataTable, rowNum){
     ///   return Math.floor(dataTable.getValue(rowNum, 1) / 2.54);
     /// }
+    [<Stub>]
     member this.setColumns(columnIndexes: int []) : unit = X
 
     /// Ibid
+    [<Stub>]
     member this.setColumns(columnIndexes: obj []) : unit = X
 
     /// Sets the rows in this view to be all indexes (in the underlying table/view) that lie
     /// between min and max (inclusive). This is a convenience syntax for setRows(rowIndexes)
     /// above. For example, setRows(5, 10) is equivalent to setRows([5, 6, 7, 8, 9, 10]).
+    [<Stub>]
     member this.setRows(min: int, max: int) : unit = X
 
     /// Sets the visible rows in this view, based on index numbers from the underlying
@@ -868,5 +934,6 @@ type DataView =
     /// setRows([3, 4, 3, 2]) will cause row 3 to appear twice in this view). The array thus
     /// provides a mapping of the rows from the underlying table/view to this view. You can
     /// use getFilteredRows() or getSortedRows() to generate input for this method.
+    [<Stub>]
     member this.setRows(rowIndexes: int []) : unit = X
 

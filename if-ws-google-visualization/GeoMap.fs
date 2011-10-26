@@ -108,24 +108,27 @@ type GeoMapOptions = {
 /// specify optional hovertext for regions. The map is rendered in the browser using
 /// an embedded Flash player. Note that the map is not scrollable or draggable, but 
 /// can be configured to allow zooming.
-[<Stub>]
 [<Name "google.visualization.GeoMap">]
 [<Require(typeof<Dependencies.GeoMap>)>]
 type GeoMap =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: GeoMapOptions) : unit = X
 
     /// Standard getSelection implementation. Selection elements are
     /// all row elements. Can return more than one selected row. The row
     /// indexes in the selection object refer to the original data table
     /// regardless of any user interaction (sort, paging, etc.).
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X

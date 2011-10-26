@@ -237,56 +237,66 @@ type VisibleChartRange = {
 /// 
 /// Important: You must specify the height and width of the container element explicitly
 /// on your page.
-[<Stub>]
 [<Name "google.visualization.AnnotatedTimeLine">]
 [<Require(typeof<Dependencies.AnnotatedTimeLine>)>]
 type AnnotatedTimeLine =
+    [<Stub>]
     new (elem: Dom.Element) = {}
 
     /// Draws the chart. You can speed up response time for the second and later calls to
     /// draw() by using the allowRedraw property.
+    [<Stub>]
     member this.draw(data: DataCommon, options: AnnotatedTimeLineOptions) : unit = X
 
     /// Standard getSelection() implementation. Selected elements are cell elements. Only one
     /// cell can be selected at a time by the user.
+    [<Stub>]
     member this.getSelection() : obj = X
 
     /// Call this method to retrieve information about the current
     /// sort state of a table that has been sorted (typically by the
     /// user, who has clicked on a column heading to sort the rows by a
     /// specific column).
+    [<Stub>]
     member this.getSortOrder() : SortOrder = X
 
     /// Standard setSelection() implementation, but can only select
     /// entire rows, or multiple rows. The row indexes in the selection
     /// object refer to the original data table regardless of any user
     /// interaction (sort, paging, etc.).
+    [<Stub>]
     member this.setSelection(selection: obj) : unit = X
 
     /// Returns an object with start and end properties, which each one of them is a Date
     /// object, representing the current time selection.
+    [<Stub>]
     member this.getVisibleChartRange() : VisibleChartRange = X
 
     /// Hides the specified data series from the chart. Accepts one parameter which can be a
     /// number or an array of numbers, in which 0 refers to the first data series, and so on.
+    [<Stub>]
     member this.hideDataColumns(columnIndexes: float) : unit = X
 
     /// Hides the specified data series from the chart. Accepts one parameter which can be a
     /// number or an array of numbers, in which 0 refers to the first data series, and so on.
+    [<Stub>]
     member this.hideDataColumns(columnIndexes: float []) : unit = X
 
     /// Sets the visible range (zoom) to the specified range. Accepts two parameters of type
     /// Date that represent the first and last times of the wanted selected visible
     /// range. Set start to null to include everything from the earliest date to end; set end
     /// to null to include everything from start to the last date.
+    [<Stub>]
     member this.setVisibleChartRange(start: Date, end': Date) : unit = X
 
     /// Shows the specified data series from the chart, after they were hidden using
     /// hideDataColumns method. Accepts one parameter which can be a number or an array of
     /// numbers, in which 0 refers to the first data series, and so on.
+    [<Stub>]
     member this.showDataColumns(columnIndexes: float) : unit = X
 
     /// Shows the specified data series from the chart, after they were hidden using
     /// hideDataColumns method. Accepts one parameter which can be a number or an array of
     /// numbers, in which 0 refers to the first data series, and so on.
+    [<Stub>]
     member this.showDataColumns(columnIndexes: float[]) : unit = X
