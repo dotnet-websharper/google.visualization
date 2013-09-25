@@ -31,30 +31,21 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\$(Name).XML</DocumentationFile>
   </PropertyGroup>
-  <Import Project="..\.build\lib\IntelliFactory.WebSharper.targets" />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
+  <Import Project="../build/net45/$(Name).proj" />
   <ItemGroup>
     <Compile Include="Samples.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core" />
-    <Reference Include="System" />
-    <Reference Include="System.Web" />
-    <Reference Include="IntelliFactory.WebSharper" />
-    <Reference Include="IntelliFactory.WebSharper.Core" />
-    <Reference Include="IntelliFactory.WebSharper.Control" />
-    <Reference Include="IntelliFactory.Html" />
-    <Reference Include="IntelliFactory.WebSharper.Html" />
-    <Reference Include="IntelliFactory.WebSharper.Ecma" />
-    <Reference Include="IntelliFactory.WebSharper.Dom" />
-    <Reference Include="IntelliFactory.WebSharper.JQuery" />
-    <Reference Include="IntelliFactory.WebSharper.Web" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\if-ws-google-visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj">
-      <Name>IntelliFactory.WebSharper.Google.Visualization</Name>
-      <Project>{5c51a0a3-3d37-4e05-af95-2fce77b4dfa8}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
 </Project>

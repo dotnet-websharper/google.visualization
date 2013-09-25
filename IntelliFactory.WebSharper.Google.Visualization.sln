@@ -1,16 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20617.1 PREVIEW
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C59727C0-1252-49E7-8B30-793C934C8CCC}"
 	ProjectSection(SolutionItems) = preProject
 		ivy.xml = ivy.xml
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization.Documentation", "if-ws-google-visualization-docs\IntelliFactory.WebSharper.Google.Visualization.Documentation.fsproj", "{93F52AE2-4869-44AB-848C-4C95D26052AE}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization", "IntelliFactory.WebSharper.Google.Visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj", "{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization", "if-ws-google-visualization\IntelliFactory.WebSharper.Google.Visualization.fsproj", "{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization.Tests", "if-ws-google-visualization-tests\IntelliFactory.WebSharper.Google.Visualization.Tests.fsproj", "{979C0793-E755-4BFB-AD7E-8A968BCF9326}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "IntelliFactory.WebSharper.Google.Visualization.Tests", "IntelliFactory.WebSharper.Google.Visualization.tests\IntelliFactory.WebSharper.Google.Visualization.Tests.fsproj", "{979C0793-E755-4BFB-AD7E-8A968BCF9326}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "web\Web.csproj", "{F453CB86-F138-4F1B-A87B-93E1B587E16F}"
 EndProject
@@ -20,10 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93F52AE2-4869-44AB-848C-4C95D26052AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93F52AE2-4869-44AB-848C-4C95D26052AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93F52AE2-4869-44AB-848C-4C95D26052AE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{93F52AE2-4869-44AB-848C-4C95D26052AE}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C51A0A3-3D37-4E05-AF95-2FCE77B4DFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
