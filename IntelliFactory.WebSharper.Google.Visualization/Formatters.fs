@@ -14,7 +14,6 @@ namespace IntelliFactory.WebSharper.Google.Visualization.Formatters
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
 [<AbstractClass>]
 type Formatter() =
@@ -33,43 +32,47 @@ type ArrowFormat =
     [<Stub>]
     new (options: ArrowFormatOptions) = {}
 
-type BarFormatOptions = {
+type BarFormatOptions [<Inline "{}">] () =
 
     /// A number that is the base value to compare the cell value against. If the cell value
     /// is higher, it will be drawn to the right of the base; if lower, it will be drawn to
     /// the left. Default value is 0.
-    [<Name "base">]
-    base' : float
+    [<DefaultValue>]
+    val mutable ``base`` : float
 
     /// A string indicating the negative value section of bars. Possible values are 'red',
     /// 'green' and 'blue'; default value is 'red'.
-    colorNegative : string
+    [<DefaultValue>]
+    val mutable colorNegative : string
 
     /// A string indicating the color of the positive value section of bars. Possible values
     /// are 'red', 'green' and 'blue'. Default is 'blue'.
-    colorPositive : string
+    [<DefaultValue>]
+    val mutable colorPositive : string
 
     /// A boolean indicating if to draw a 1 pixel dark base line when negative values are
     /// present. The dark line is there to enhance visual scanning of the bars. Default value
     /// is 'false'.
-    drawZeroLine : bool
+    [<DefaultValue>]
+    val mutable drawZeroLine : bool
 
     /// The maximum number value for the bar range. Default value is the highest value in the
     /// table.
-    max : float
+    [<DefaultValue>]
+    val mutable max : float
 
     /// The minimum number value for the bar range. Default value is the lowest value in the
     /// table.
-    min : float
+    [<DefaultValue>]
+    val mutable min : float
 
     /// If true, shows values and bars; if false, shows only bars. Default value is true.
-    showValue : bool
+    [<DefaultValue>]
+    val mutable showValue : bool
 
     /// Thickness of each bar, in pixels. Default value is 100.
-    width : int
-} with
-    [<JavaScript>]
-    static member Default : BarFormatOptions = Empty<BarFormatOptions>
+    [<DefaultValue>]
+    val mutable width : int
 
 /// Adds a colored bar to a numeric cell indicating whether the cell value
 /// is above or below a specified base value.
@@ -135,7 +138,7 @@ type ColorFormat =
     [<Stub>]
     member this.addGradientRange(from: obj, to': obj, color: string, fromBgColor: string, toBgColor: string) : unit = X
 
-type DateFormatOptions = {
+type DateFormatOptions [<Inline "{}">] () =
 
     /// A quick formatting option for the date. The following string values are supported,
     /// reformatting the date February 28, 2008 as shown:
@@ -145,12 +148,14 @@ type DateFormatOptions = {
     ///     * 'long' - Long format: e.g., "February 28, 2008"
     /// You cannot specify both formatType and pattern.
     /// 
-    formatType : string
+    [<DefaultValue>]
+    val mutable formatType : string
 
     /// A custom format pattern to apply to the value, similar to the ICU date and time
     /// format. For example: var formatter3 = new google.visualization.DateFormat({pattern:
     /// "EEE, MMM d, ''yy"}); You cannot specify both formatType and pattern. 
-    pattern : string
+    [<DefaultValue>]
+    val mutable pattern : string
 
     /// The time zone in which to display the date value. This is a numeric value, indicating
     /// GMT + this number of time zones (can be negative). Date object are created by default
@@ -159,10 +164,8 @@ type DateFormatOptions = {
     /// Date object of 5pm noon on a computer located in Greenwich, England, and specified
     /// timeZone to be -5 (options['timeZone'] = -5, or Eastern Pacific Time in the US), the
     /// value displayed would be 12 noon.
-    timeZone : float
-} with  
-    [<JavaScript>]
-    static member Default : DateFormatOptions = Empty<DateFormatOptions>
+    [<DefaultValue>]
+    val mutable timeZone : float
 
 [<Name "google.visualization.DateFormat">]
 type DateFormat =

@@ -9,43 +9,44 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Visualizations
+namespace IntelliFactory.WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-type OrgChartOptions = {
-    /// Determines if double click will collapse a node.
-    /// Default Value: false
-    allowCollapse : bool
-     
-    /// If set to true, names that includes HTML tags will be rendered as HTML.
-    /// Default Value: false
-    allowHtml : bool
-     
-    /// A class name to assign to node elements. Apply CSS to this class name
-    /// to specify colors or styles for the chart elements.
-    /// Default Value: default class name
-    nodeClass : string
-     
-    /// A class name to assign to selected node elements. Apply CSS to this class
-    /// name to specify colors or styles for selected chart elements.
-    /// Default Value: default class name
-    selectedNodeClass : string
-     
-    /// 'small', 'medium' or 'large'
-    /// Default Value: 'medium'
-    size : string
-} with
-    [<JavaScript>]
-    static member Default : OrgChartOptions = Empty<OrgChartOptions>
+type OrgChartSize =
+    | [<Constant "small">] Small
+    | [<Constant "medium">] Medium
+    | [<Constant "large">] Large
+
+type OrgChartOptions [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable allowCollapse : bool
+
+    [<DefaultValue>]
+    val mutable allowHtml : bool
+
+    [<DefaultValue>]
+    val mutable color : string
+
+    [<DefaultValue>]
+    val mutable nodeClass : string
+
+    [<DefaultValue>]
+    val mutable selectedNodeClass : string
+
+    [<DefaultValue>]
+    val mutable selectionColor : string
+
+    [<DefaultValue>]
+    val mutable size : OrgChartSize
 
 /// A line chart that is rendered within the browser using SVG or VML. Displays 
 /// tips when clicking on points. Animates lines when clicking on legend entries. 
 [<Name "google.visualization.OrgChart">]
+[<Require(typeof<Dependencies.JsApi>)>]
 [<Require(typeof<Dependencies.OrgChart>)>]
 type OrgChart =
     [<Stub>]

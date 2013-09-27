@@ -9,23 +9,24 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Visualizations
+namespace IntelliFactory.WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-type MotionChartOptions = {
+type MotionChartOptions [<Inline "{}">] () =
 
     /// Height of the chart in pixels.
     /// Default Value: 300
-    height : float
+    [<DefaultValue>]
+    val mutable height : float
      
     /// Width of the chart in pixels.
     /// Default Value: 500
-    width : float
+    [<DefaultValue>]
+    val mutable width : float
      
     /// An initial display state for the chart. This is a serialized JSON object
     /// that describes zoom level, selected dimensions, selected bubbles/entities,
@@ -33,43 +34,49 @@ type MotionChartOptions = {
     /// Initial State</a> to
     /// learn how to set this.
     /// Default Value: <em>none</em>
-    state : string
+    [<DefaultValue>]
+    val mutable state : string
      
     /// false hides the list of visible entities.
     /// Default Value: true
-    showSelectListComponent : string
+    [<DefaultValue>]
+    val mutable showSelectListComponent : string
      
     /// false hides the right hand panel.
     /// Default Value: true
-    showSidePanel : string
+    [<DefaultValue>]
+    val mutable showSidePanel : string
      
     /// false hides the metric picker for x.
     /// Default Value: true
-    showXMetricPicker : string
+    [<DefaultValue>]
+    val mutable showXMetricPicker : string
      
     /// false hides the metric picker for y.
     /// Default Value: true
-    showYMetricPicker : string
+    [<DefaultValue>]
+    val mutable showYMetricPicker : string
      
     /// false hides the scale picker for x.
     /// Default Value: true
-    showXScalePicker : string
+    [<DefaultValue>]
+    val mutable showXScalePicker : string
      
     /// false hides the scale picker for y.
     /// Default Value: true
-    showYScalePicker : string
+    [<DefaultValue>]
+    val mutable showYScalePicker : string
      
     /// false disables the options compartment in the settings panel.
     /// Default Value: true
-    showAdvancedPanel : string
-} with
-    [<JavaScript>]
-    static member Default : MotionChartOptions = Empty<MotionChartOptions>
+    [<DefaultValue>]
+    val mutable showAdvancedPanel : string
 
 
 /// A dynamic chart to explore several indicators over time. The chart is rendered within 
 /// the browser using Flash.
 [<Name "google.visualization.MotionChart">]
+[<Require(typeof<Dependencies.JsApi>)>]
 [<Require(typeof<Dependencies.MotionChart>)>]
 type MotionChart =
     [<Stub>]

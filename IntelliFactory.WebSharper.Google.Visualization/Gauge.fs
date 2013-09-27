@@ -9,88 +9,90 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Visualizations
+namespace IntelliFactory.WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-type GaugeOptions = {
+type GaugeOptions [<Inline "{}">] () =
 
     /// The lowest value for a range marked by a green color.
     ///
     /// Default Value: none
-    greenFrom : float
+    [<DefaultValue>]
+    val mutable greenFrom : float
      
     /// The highest value for a range marked by a green color.
     ///
     /// Default Value: none
-    greenTo : float
+    [<DefaultValue>]
+    val mutable greenTo : float
      
     /// Height of the chart in pixels.
     /// Default Value: Container's width
-    height : float
+    [<DefaultValue>]
+    val mutable height : float
      
     /// Labels for major tick marks. The number of labels define the number of
     /// major ticks in all gauges. The default is five major ticks, with the
     /// labels of the minimal and maximal gauge value.
     ///
     /// Default Value: none
-    majorTicks : string []
+    [<DefaultValue>]
+    val mutable majorTicks : string []
      
     /// The maximal value of a gauge.
     ///
     /// Default Value: 100
-    max : float
+    [<DefaultValue>]
+    val mutable max : float
      
     /// The minimal value of a gauge.
     ///
     /// Default Value: 0
-    min : float
+    [<DefaultValue>]
+    val mutable min : float
      
     /// The number of minor tick section in each major tick section.
     ///
     /// Default Value: 2
-    minorTicks : float
+    [<DefaultValue>]
+    val mutable minorTicks : float
      
     /// The lowest value for a range marked by a red color.
     ///
     /// Default Value: none
-    redFrom : float
+    [<DefaultValue>]
+    val mutable redFrom : float
      
     /// The highest value for a range marked by a red color.
     ///
     /// Default Value: none
-    redTo : float
+    [<DefaultValue>]
+    val mutable redTo : float
      
     /// Width of the chart in pixels.
     /// Default Value: Container's width
-    width : float
+    [<DefaultValue>]
+    val mutable width : float
      
     /// The lowest value for a range marked by a yellow color.
     ///
     /// Default Value: none
-    yellowFrom : float
+    [<DefaultValue>]
+    val mutable yellowFrom : float
      
     /// The highest value for a range marked by a yellow color.
     ///
     /// Default Value: none
-    yellowTo : float
-} with
-    [<JavaScript>]
-    static member Default : GaugeOptions = Empty<GaugeOptions>
+    [<DefaultValue>]
+    val mutable yellowTo : float
 
 
 /// One or more gauges are rendered within the browser using SVG or VML. 
 [<Name "google.visualization.Gauge">]
 [<Require(typeof<Dependencies.Gauge>)>]
-type Gauge =
-    [<Stub>]
-    new (elem: Dom.Element) = {}
-
-    /// Draws the chart. You can speed up response time for the second and later calls to
-    /// draw() by using the allowRedraw property.
-    [<Stub>]
-    member this.draw(data: DataCommon, options: GaugeOptions) : unit = X
+type Gauge [<Stub>] (elem: Dom.Element) =
+    inherit ChartCommon<GaugeOptions> ()

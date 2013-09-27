@@ -1,4 +1,4 @@
-﻿// $begin{copyright}
+// $begin{copyright}
 //
 // This file is confidential and proprietary.
 //
@@ -16,21 +16,15 @@ open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 
-type ScatterChartOptions [<Inline "{}">] () =
-    inherit ChartOptionsCommon()
+type SteppedAreaChartOptions [<Inline "{}">] () =
+    inherit AreaChartOptions()
 
     [<DefaultValue>]
-    val mutable curveType : CurveType
+    val mutable connectSteps : bool
 
-    [<DefaultValue>]
-    val mutable lineWidth : int
-
-    [<DefaultValue>]
-    val mutable pointSize : int
-
-/// A line chart that is rendered within the browser using SVG or VML. Displays 
-/// tips when clicking on points. Animates lines when clicking on legend entries. 
-[<Name "google.visualization.ScatterChart">]
+/// A stepped area chart that is rendered within the browser using SVG
+/// or VML. Displays tips when hovering over steps.
+[<Name "google.visualization.SteppedAreaChart">]
 [<Require(typeof<Dependencies.CoreChart>)>]
-type ScatterChart [<Stub>] (elem: Dom.Element) =
-    inherit ChartCommon<ScatterChartOptions> ()
+type SteppedAreaChart [<Stub>] (elem: Dom.Element) =
+    inherit ChartCommon<SteppedAreaChartOptions> ()

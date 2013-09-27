@@ -15,10 +15,23 @@ open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
+[<Require(typeof<Dependencies.JsApi>)>]
 module Events = 
- 
+
+    module private Visualizations =
+        type AreaChart = IntelliFactory.WebSharper.Google.Visualization.AreaChart
+        type BarChart = IntelliFactory.WebSharper.Google.Visualization.BarChart
+        type ColumnChart = IntelliFactory.WebSharper.Google.Visualization.ColumnChart
+        type LineChart = IntelliFactory.WebSharper.Google.Visualization.LineChart
+        type PieChart = IntelliFactory.WebSharper.Google.Visualization.PieChart
+        type ScatterChart = IntelliFactory.WebSharper.Google.Visualization.ScatterChart
+        type IntensityMap = IntelliFactory.WebSharper.Google.Visualization.IntensityMap
+        type MotionChart = IntelliFactory.WebSharper.Google.Visualization.MotionChart
+        type OrgChart = IntelliFactory.WebSharper.Google.Visualization.OrgChart
+        type Table = IntelliFactory.WebSharper.Google.Visualization.Table
+        type TreeMap = IntelliFactory.WebSharper.Google.Visualization.TreeMap
+
     [<Inline "google.visualization.events.addListener($target, $event, $h)">]
     let internal listen<'param> (target: obj) 
                                 (event: string) 
@@ -29,30 +42,6 @@ module Events =
         let ev = new Event<_>()
         listen<'T> target eventName ev.Trigger
         ev.Publish
-
-    type AnnotatedTimeLine =
-
-        /// Zoom range changed. Fired after the user modified the visible
-        /// time range but not after a call to setVisibleChartRange method.
-        // I chose not to add the event properties since the documentation advices
-        // not to use them.
-        [<JavaScript>]
-        static member RangeChange (visualization: Visualizations.AnnotatedTimeLine) = 
-            event<unit> visualization "rangechange"
-
-        /// The chart is ready for external method calls. If you want to interact
-        /// with the chart, and call methods after you draw it, you should set up
-        /// a listener for this event before you call the draw method, and call them
-        /// only after the event was fired
-        [<JavaScript>]
-        static member Ready (visualization: Visualizations.AnnotatedTimeLine) = 
-            event<unit> visualization "ready"
-
-        [<JavaScript>]
-        /// When the user clicks on an annotation flag (marker), the corresponding cell 
-        /// in the data table is selected. The visualization then fires this event.
-        static member Select (visualization: Visualizations.AnnotatedTimeLine) = 
-            event<unit> visualization "select"
 
     /// Wrapper for onmouse_ events args.
     type RowColumnIndexes = {
@@ -243,42 +232,6 @@ module Events =
     type RegionClickArgs = {
         region : string
     }
-
-    type GeoMap =
-        
-        /// Fired when the user clicks a region with an assigned value. To learn 
-        /// what has been selected, call getSelection(). Available only when the 
-        /// dataMode option is set to 'regions'.
-        /// Note: Because of certain limitations, the select event is not thrown if you are accessing the page in your browser as 
-        /// a file (e.g., "file://") rather than from a server (e.g., "http://www").
-        [<JavaScript>]
-        static member Select (visualization: Visualizations.GeoMap) = 
-            event<unit> visualization "select"
-
-        /// Called when a region is clicked. Works both for 'regions' and 'markers'
-        /// dataMode. However, in marker mode, this will not be thrown for the specific country
-        /// assigned in the 'region' option (if a specific country was listed).
-        /// Note: Because of certain limitations, the regionClick event is not thrown if you are
-        /// accessing the page in your browser as a file (e.g., "file://") rather than from a
-        /// server (e.g., "http://www").
-        [<JavaScript>]
-        static member RegionClick (visualization: Visualizations.GeoMap) = 
-            event<RegionClickArgs> visualization "regionClick"
-
-        /// Called when the zoom out button is clicked. To handle zooming, catch this event and
-        /// change the region option.
-        /// 
-        /// Note: Because of certain limitations, the zoomOut event is not thrown if you are
-        /// accessing the page in your browser as a file (e.g., "file://") rather than from a
-        /// server (e.g., "http://www").
-        [<JavaScript>]
-        static member ZoomOut (visualization: Visualizations.GeoMap) = 
-            event<unit> visualization "zoomOut"
-
-        /// Called when the geomap has finished drawing.
-        [<JavaScript>]
-        static member DrawingDone (visualization: Visualizations.GeoMap) = 
-            event<unit> visualization "drawingDone"
 
     type IntensityMap =
         [<JavaScript>]

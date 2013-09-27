@@ -49,22 +49,26 @@
     <Compile Include="Dependencies.fs" />
     <Compile Include="Base.fs" />
     <Compile Include="Table.fs" />
-    <Compile Include="AnnotatedTimeLine.fs" />
+    <Compile Include="Query.fs" />
     <Compile Include="AreaChart.fs" />
     <Compile Include="BarChart.fs" />
+    <Compile Include="BubbleChart.fs" />
+    <Compile Include="CandlestickChart.fs" />
     <Compile Include="ColumnChart.fs" />
+    <Compile Include="LineChart.fs" />
+    <Compile Include="ComboChart.fs" />
     <Compile Include="Formatters.fs" />
     <Compile Include="Gauge.fs" />
     <Compile Include="Regions.fs" />
-    <Compile Include="GeoMap.fs" />
+    <Compile Include="GeoChart.fs" />
     <Compile Include="IntensityMap.fs" />
-    <Compile Include="LineChart.fs" />
     <Compile Include="MotionChart.fs" />
     <Compile Include="OrgChart.fs" />
     <Compile Include="PieChart.fs" />
     <Compile Include="ScatterChart.fs" />
+    <Compile Include="SteppedAreaChart.fs" />
+    <Compile Include="TimeLine.fs" />
     <Compile Include="TreeMap.fs" />
     <Compile Include="Events.fs" />
-    <Compile Include="License.fs" />
   </ItemGroup>
 </Project>

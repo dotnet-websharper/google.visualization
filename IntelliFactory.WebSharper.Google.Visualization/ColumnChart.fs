@@ -9,115 +9,31 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Visualizations
+namespace IntelliFactory.WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
-type ColumnChartOptions = {
+type ColumnChartOptions [<Inline "{}">] () =
+    inherit ChartOptionsCommon()
 
-     
-    /// The background color for the main area of the chart.
-    /// May be one of the following options:
-    /// <ul>
-    /// <li>A string with color supported by HTML, for example 'red' or '#00cc00'</li>
-    /// <li>An object with properties <code>stroke</code> <code>fill</code> and <code>strokeSize</code>.
-    /// <code>stroke</code> and <code>fill</code> should be a string with a color. strokeSize is a number.
-    /// For example: <code>{backgroundColor: {stroke:'black', fill:'#eee', strokeSize: 1}</code>.
-    /// To use just fill, without a stroke, use <code>stroke:null, strokeSize: 0</code>. </li>
-    /// </ul>
-    /// Default Value: default color
-    backgroundColor : Color
-     
-    /// <p>An array of colors, where each element specifies the color of one series.
-    /// You should specify one array element for each series.</p>
-    /// <ul>
-    /// <li>If <code>is3D=false</code>, this is an array of HTML colors. Example:
-    /// colors:['00FF00','orange']</li>
-    /// <li>If <code>is3D=true</code>, this is an array of either HTML colors, or
-    /// objects of this type: <code>{color:<em>face_color</em>, darker:<em>shade_color</em>}</code> where <code>color</code> is
-    /// the element's face color, and <code>darker</code> is the shade color.
-    /// However, if you specify an HTML color for a 3D object, face and shade will
-    /// be the same color, and the 3D effect will be reduced. Example: <code>{is3D:true,
-    /// colors:[{color:'FF0000', darker:'680000'}, {color:'cyan', darker:'deepskyblue'}]}</code></li>
-    /// </ul>
-    /// Default Value: Default colors
-    colors : string []
-     
-    fontSize : float
-    fontName : string
-    
-    hAxis : Axis
-     
-    /// Height of the chart in pixels.
-    /// Default Value: Container's height
-    height : float
-      
+    [<DefaultValue>]
+    val mutable bar : Bar
+
     /// If set to true, line values are stacked (accumulated).
     /// Default Value: false
-    isStacked : bool
-     
-    /// Position and type of legend. Can be one of the following:
-    /// <ul>
-    /// <li>'right' - To the right of the chart.</li>
-    /// <li>'left' - To the left of the chart.</li>
-    /// <li>'top' - Above the chart.</li>
-    /// <li>'bottom' - Below the chart.</li>
-    /// <li>'none' - No legend is displayed.</li>
-    /// </ul>
-    /// Default Value: 'right'
-    legend : LegendPosition
-    
-    legendTextStyle : TextStyle 
-     
-    /// If set to true, will draw categories from right to left. The default is to draw left-to-right.
-    /// Default Value: false
-    reverseCategories : bool
-      
-    /// Text to display above the chart.
-    /// Default Value: no title
-    title : string
-     
-    titleTextStyle : string
-    
-    tooltipTextStyle : TextStyle
-    
-    vAxis : Axis 
-     
-    /// Width of the chart in pixels.
-    /// Default Value: Container's width
-    width : float
-} with
-    [<JavaScript>]
-    static member Default : ColumnChartOptions = Empty<ColumnChartOptions>
+    [<DefaultValue>]
+    val mutable isStacked : bool
+
+    [<DefaultValue>]
+    val mutable vAxes : Axis[]
 
 /// A vertical bar chart that is rendered within the browser using SVG or VML. 
 /// Displays tips when clicking on points. Animates lines when clicking on legend
 /// entries. For a horizontal version of this chart, see the Bar Chart.
 [<Name "google.visualization.ColumnChart">]
 [<Require(typeof<Dependencies.CoreChart>)>]
-type ColumnChart =
-    [<Stub>]
-    new (elem: Dom.Element) = {}
-
-    /// Draws the chart. You can speed up response time for the second and later calls to
-    /// draw() by using the allowRedraw property.
-    [<Stub>]
-    member this.draw(data: DataCommon, options: ColumnChartOptions) : unit = X
-
-    /// Standard getSelection implementation. Selection elements are
-    /// all row elements. Can return more than one selected row. The row
-    /// indexes in the selection object refer to the original data table
-    /// regardless of any user interaction (sort, paging, etc.).
-    [<Stub>]
-    member this.getSelection() : obj = X
-
-    /// Standard setSelection() implementation, but can only select
-    /// entire rows, or multiple rows. The row indexes in the selection
-    /// object refer to the original data table regardless of any user
-    /// interaction (sort, paging, etc.).
-    [<Stub>]
-    member this.setSelection(selection: obj) : unit = X
+type ColumnChart [<Stub>] (elem: Dom.Element) =
+    inherit ChartCommon<ColumnChartOptions> ()

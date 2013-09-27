@@ -9,18 +9,238 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Base
+namespace IntelliFactory.WebSharper.Google.Visualization
 
-open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 
-[<AutoOpen>]
-module internal Helpers =
-    [<JavaScript>]
-    let X<'T> = Unchecked.defaultof<'T>
+type BoundingBox [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable left : string
+    [<DefaultValue>]
+    val mutable top : string
+    [<DefaultValue>]
+    val mutable width : string
+    [<DefaultValue>]
+    val mutable height : string
+
+type TextStyle [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable color: string
+    [<DefaultValue>]
+    val mutable fontName : string 
+    [<DefaultValue>]
+    val mutable fontSize : int
+
+type Axis [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable baseline : int
+
+    [<DefaultValue>]
+    val mutable baselineColor : string
+
+    [<DefaultValue>]
+    val mutable logScale : bool
+
+    [<DefaultValue>]
+    val mutable minValue : float
+
+    [<DefaultValue>]
+    val mutable maxValue : float
+
+    /// The direction in which the values along the horizontal axis grow. Specify -1 to reverse the order of the values.
+    [<DefaultValue>]
+    val mutable direction : int
+
+    /// An object that specifies the horizontal axis text style. The object has this format:
+    [<DefaultValue>]
+    val mutable textStyle : TextStyle
+
+    /// hAxis property that specifies the title of the horizontal axis.
+    [<DefaultValue>]    
+    val mutable title : string
+
+    [<DefaultValue>]
+    val mutable titleTextStyle : TextStyle
+
+    [<DefaultValue>]
+    /// If true, draw the horizontal axis text at an angle, to help fit more text along the axis; if false, draw horizontal axis text upright. Default behavior is to slant text if it cannot all fit when drawn upright.
+    val mutable slantedText : bool
+
+    [<DefaultValue>]
+    /// The angle of the horizontal axis text, if it's drawn slanted. Ignored if hAxis.slantedText is false, or is in auto mode, and the chart decided to draw the text horizontally.
+    val mutable slantedTextAngle : float
+
+    [<DefaultValue>]
+    /// Maximum number of levels of horizontal axis text. If axis text labels become too crowded, the server might shift neighboring labels up or down in order to fit labels closer together. This value specifies the most number of levels to use; the server can use fewer levels, if labels can fit without overlapping.
+    val mutable maxAlternation : float
+
+    [<DefaultValue>]
+    /// How many horizontal axis labels to show, where 1 means show every label, 2 means show every other label, and so on. Default is to try to show as many labels as possible without overlapping.
+    val mutable showTextEvery : int
+
+type Selection = {
+    /// Index of the row. If null, the selection is a column.
+    row : int
+    /// Index of the column. If null, the selection is a row.
+    column : int
+}
+
+[<RequireQualifiedAccess>]
+type AggregationTarget =
+    /// Group selected data by x-value.
+    | [<Constant "category">] Category
+    /// Group selected data by series.
+    | [<Constant "series">] Series
+    /// Group selected data by x-value if all selections have the same x-value, and by series otherwise.
+    | [<Constant "auto">] Auto
+    /// Show only one tooltip per selection.
+    | [<Constant "none">] None
+
+[<RequireQualifiedAccess>]
+type Easing =
+    /// Constant speed.
+    | [<Constant "linear">] Linear
+    /// Ease in - Start slow and speed up.
+    | [<Constant "in">] In
+    /// Ease out - Start fast and slow down.
+    | [<Constant "out">] Out
+    /// Ease in and out - Start slow, speed up, then slow down.
+    | [<Constant "inAndOut">] InAndOut
+
+type Animation [<Inline "{}">] () =
+    /// The duration of the animation, in milliseconds. For details, see the animation documentation.
+    [<DefaultValue>]
+    val mutable duration : int
+
+    /// The easing function applied to the animation. 
+    [<DefaultValue>]
+    val mutable easing : Easing
+
+[<RequireQualifiedAccess>]
+type TitlePosition =
+    /// Draw the title inside the the chart area.
+    | [<Constant "in">] In
+    /// Draw the title outside the chart area.
+    | [<Constant "out">] Out
+    /// Omit the title.
+    | [<Constant "none">] None
+
+type Color [<Inline "{}">] private () =
+    [<DefaultValue>]
+    val mutable stroke : string
     
-    [<Inline "{}">]
-    let Empty<'T> : 'T = X
+    [<DefaultValue>]        
+    val mutable fill : string
+    
+    [<DefaultValue>]
+    val mutable strokeWidth : int
+    
+    [<Inline "$s">]
+    static member HtmlColor(s: string) : Color = X
+
+    [<Inline>]
+    [<JavaScript>]
+    static member FromProperties (stroke: string) 
+                                 (fill: string) 
+                                 (strokeWidth: int) =
+        new Color(stroke = stroke, fill = fill, strokeWidth = strokeWidth)
+
+[<RequireQualifiedAccess>]
+type FocusTarget =
+    /// Focus on a single data point. Correlates to a cell in the data table.
+    | [<Constant "datum">] Datum
+    /// Focus on a grouping of all data points along the major axis. Correlates to a row in the data table.
+    | [<Constant "category">] Category
+
+[<RequireQualifiedAccess>]
+type LegendPosition = 
+    | [<Constant "right" >] Right
+    | [<Constant "top" >]   Top
+    | [<Constant "bottom" >] Bottom
+    | [<Constant "in">] In
+    | [<Constant "none" >] None
+
+[<RequireQualifiedAccess>]
+type LegendAlignment =
+    | [<Constant "start">] Start
+    | [<Constant "center">] Center
+    | [<Constant "end">] End
+
+type Legend [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable position : LegendPosition
+    [<DefaultValue>]
+    val mutable alignment : LegendAlignment
+    [<DefaultValue>]
+    val mutable textStyle : TextStyle
+
+[<RequireQualifiedAccess>]
+type SelectionMode =
+    | [<Constant "single">] Single
+    | [<Constant "multiple">] Multiple
+
+type Series [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable color : string
+
+    /// Which axis to assign this series to, where 0 is the default axis, and 1 is the opposite axis. Default value is 0; set to 1 to define a chart where different series are rendered against different axes. At least one series much be allocated to the default axis. You can define a different scale for different axes.
+    [<DefaultValue>]
+    val mutable targetAxisIndex : int
+
+    [<DefaultValue>]
+    val mutable pointSize : int
+
+    [<DefaultValue>]
+    val mutable lineWidth : int
+
+    [<DefaultValue>]
+    val mutable areaOpacity : float
+
+    [<DefaultValue>]
+    val mutable visibleInLegend : bool
+
+[<RequireQualifiedAccess>]
+type TooltipTrigger =
+    | [<Constant "focus">] Focus
+    | [<Constant "none">] None
+
+type Tooltip [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable isHtml : bool
+    [<DefaultValue>]
+    val mutable showColorCode : bool
+    [<DefaultValue>]
+    val mutable textStyle : TextStyle
+    [<DefaultValue>]
+    val mutable trigger : TooltipTrigger
+
+type TrendlineType =
+    | [<Constant "exponential">] Exponential
+    | [<Constant "linear">] Linear
+
+type Trendline [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable color : string
+
+    [<DefaultValue>]
+    val mutable labelInLegend : string
+
+    [<DefaultValue>]
+    val mutable lineWidth : int
+
+    [<DefaultValue>]
+    val mutable opacity : float
+
+    [<DefaultValue>]
+    val mutable ``type`` : TrendlineType
+
+    [<DefaultValue>]
+    val mutable visibleInLegend : bool
+
+namespace IntelliFactory.WebSharper.Google.Visualization.Base
+
+open IntelliFactory.WebSharper
+open IntelliFactory.WebSharper.Google.Visualization
 
 // Simple wrap to improve IntelliSense
 type ColumnType = 
@@ -32,38 +252,68 @@ type ColumnType =
     | [<Constant "timeofday">] TimeOfDayType
 
 /// Cell wrap        
-type Cell = {
+type Cell [<Inline "{}">] () =
     /// The cell value. The data type should match the column data type. 
     /// If null, the whole object should be empty and have neither v nor f properties.
-    v : obj
+    [<DefaultValue>]
+    val mutable v : obj
     /// A string version of the v value, formatted for display. The values should match,
     /// so if you specify Date(2008, 0, 1) for v, you should specify "January 1, 2008" 
     /// or some such string for this property. This value is not checked against the v 
     /// value. The visualization will not use this value for calculation, only as a label
     /// for display. If omitted, a string version of v will be used.
-    f : string
+    [<DefaultValue>]
+    val mutable f : string
     /// An object that is a map of custom values applied to the cell. These values can be
     /// of any JavaScript type. If your visualization supports any cell-level properties, 
     /// it will describe them; otherwise, this property will be ignored. 
     /// Example: p:{style: 'border: 1px solid green;'}.
-    p : obj
-} with
-    [<JavaScript>]
-    /// Builds an empty cell.
-    static member Empty = Empty<Cell>
-    [<JavaScript>]
-    /// Builds a cell consisting of only a value.
-    static member Value(value: obj) = { Cell.Empty with v = value }
+    [<DefaultValue>]
+    val mutable p : obj
+
+/// Column role
+type ColumnRole =
+    /// Text to display on the chart near the associated data point. The text displays without any user interaction. Annotations and annotation text can be assigned to both data points and categories (axis labels).
+    | [<Constant "annotation">] Annotation
+    /// Extended text to display when the user hovers over the associated annotation. Annotations and annotation text can be assigned to both data points and categories (axis labels). If you have an annotationText column, you must also have an annotation column. Tooltip text, in contrast, is displayed when the user hovers over the associated data point on the chart.
+    | [<Constant "annotationText">] AnnotationText
+    /// Indicates whether a data point is certain or not. How this is displayed depends on the chart type—for example, it might be indicated by dashed lines or a striped fill.
+    | [<Constant "certainty">] Certainty
+    /// Emphasizes specified chart data points. Displayed as a thick line and/or large point.
+    | [<Constant "emphasis">] Emphasis
+    /// Indicates potential data range for a specific point. Intervals are usually displayed as I-bar style range indicators. Interval columns are numeric columns; add interval columns in pairs, marking the low and high value of the bar. Interval values should be added in increasing value, from left to right.
+    | [<Constant "interval">] Interval
+    /// Indicates whether a point is in or out of scope. If a point is out of scope, it is visually de-emphasized.
+    | [<Constant "scope">] Scope
+    /// Text to display when the user hovers over the data point associated with this row.
+    | [<Constant "tooltip">] Tooltip
+    /// Domain columns specify labels along the major axis of the chart. Multiple domain columns can sometimes be used to support multiple scales within the same chart.
+    | [<Constant "domain">] Domain
+    /// Data role columns specify series data to render in the chart. For most charts, one column = one series, but this can vary by chart type (for example, scatter charts require two data columns for the first series, and an additional one for each additional series; candlestick charts require four data columns for each series).
+    | [<Constant "data">] Data
+
+/// Column description
+type ColumnDescription [<Inline "{}">] () =
+    [<DefaultValue>]
+    val mutable ``type`` : ColumnType
+    [<DefaultValue>]
+    val mutable label : string
+    [<DefaultValue>]
+    val mutable id : string
+    [<DefaultValue>]
+    val mutable role : ColumnRole
+    [<DefaultValue>]
+    val mutable pattern : string
 
 /// Wrap for sorting the views.
 type SortType [<Inline "{}">] private () =
 
     [<DefaultValue>]
-    val mutable private column : int
-    
+    val mutable column : int
+
     [<DefaultValue>]
-    val mutable private desc : bool
-    
+    val mutable desc : bool
+
     // Sorts by the given column ascendent
     [<Inline>]
     [<JavaScript>]
@@ -122,6 +372,10 @@ type DataCommon [<Stub>] () =
     /// number of columns as returned by the getNumberOfColumns() method.
     [<Stub>]
     member this.getColumnRange(columnIndex: int) : obj = X
+
+    /// Returns the role of the specified column.
+    [<Stub>]
+    member this.getColumnRole(columnIndex: int) : ColumnRole = X
 
     /// Returns the type of a given column specified by the column index.
     /// 
@@ -324,6 +578,117 @@ type DataTable =
     [<Stub>]
     new (data: string, version: float) = {}
 
+    /// Adds a new column to the data table, and returns the index of the new column. All the
+    /// cells of the new column are assigned a null value.
+    /// 
+    ///     * type should be a string with the data type of the values of the column. The
+    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
+    ///       'timeofday'.  
+    ///     * label should be a string with the label of the column. The column label is 
+    ///       typically displayed as part of the visualization, for example as a column header 
+    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
+    ///       empty string is assigned.  
+    ///     * id should be a string with a unique identifier for the column. If not value is 
+    ///       specified, an empty string is assigned.
+    [<Stub>]
+    member this.addColumn(t: ColumnType) : int = X
+
+    /// Adds a new column to the data table, and returns the index of the new column. All the
+    /// cells of the new column are assigned a null value.
+    /// 
+    ///     * type should be a string with the data type of the values of the column. The
+    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
+    ///       'timeofday'.  
+    ///     * label should be a string with the label of the column. The column label is 
+    ///       typically displayed as part of the visualization, for example as a column header 
+    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
+    ///       empty string is assigned.  
+    ///     * id should be a string with a unique identifier for the column. If not value is 
+    ///       specified, an empty string is assigned.
+    [<Stub>]
+    member this.addColumn(t: ColumnType, label: string) : int = X
+
+    /// Adds a new column to the data table, and returns the index of the new column. All the
+    /// cells of the new column are assigned a null value.
+    /// 
+    ///     * type should be a string with the data type of the values of the column. The
+    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
+    ///       'timeofday'.  
+    ///     * label should be a string with the label of the column. The column label is 
+    ///       typically displayed as part of the visualization, for example as a column header 
+    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
+    ///       empty string is assigned.  
+    ///     * id should be a string with a unique identifier for the column. If not value is 
+    ///       specified, an empty string is assigned.
+    [<Stub>]
+    member this.addColumn(t: ColumnType, label: string, id: string) : int = X
+
+    /// Adds a new column to the data table, and returns the index of the new column. All the
+    /// cells of the new column are assigned a null value. It has a single object parameter with the following members:
+    ///
+    ///     * type - A string describing the column data type. Same values as type above.
+    ///     * label - [Optional, string] A label for the column.
+    ///     * id - [Optional, string] An ID for the column.
+    ///     * role - [Optional, string] A role for the column.
+    ///     * pattern - [Optional, string] A number (or date) format string specifying how to display the column value.
+    [<Stub>]
+    member this.addColumn(t: ColumnDescription) : int = X
+
+    /// Adds a new row to the data table, and returns the index of the new row.
+    ///     * opt_cellArray [optional] A row object, in JavaScript notation, specifying the
+    ///       data for the new row. If this parameter is not included, this method will
+    ///       simply add a new, empty row to the end of the table. This parameter is an array
+    ///       of cell values: if you only want to specify a value for a cell, just give the
+    ///       cell value (e.g., 55, 'hello'); if you want to specify a formatted value and/or
+    ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
+    ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
+    ///       same method call). Use null or an empty array entry for an empty cell.
+    [<Stub>]
+    member this.addRow() : int = X
+
+    /// Adds a new row to the data table, and returns the index of the new row.
+    ///     * opt_cellArray [optional] A row object, in JavaScript notation, specifying the
+    ///       data for the new row. If this parameter is not included, this method will
+    ///       simply add a new, empty row to the end of the table. This parameter is an array
+    ///       of cell values: if you only want to specify a value for a cell, just give the
+    ///       cell value (e.g., 55, 'hello'); if you want to specify a formatted value and/or
+    ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
+    ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
+    ///       same method call). Use null or an empty array entry for an empty cell.
+    [<Stub>]
+    member this.addRow(cellArray: Cell []) : int = X
+
+    /// Adds new rows to the data table, and returns the index of the last added row. You can
+    /// call this method to create new empty rows, or with data used to populate the rows, as
+    /// described below.
+    ///           o Number - A number specifying how many new, unpopulated rows to add.
+    [<Stub>]
+    member this.addRows(num: int) : int = X
+
+    /// Adds new rows to the data table, and returns the index of the last added row. You can
+    /// call this method to create new empty rows, or with data used to populate the rows, as
+    /// described below.
+    ///           o Array - An array of row objects used to populate a set of new rows. Each
+    ///           row is an object as described in addRow(). Use null or an empty array entry
+    ///           for an empty cell.
+    [<Stub>]
+    member this.addRows(cells: Cell [] []) : int = X
+
+    /// Adds new rows to the data table, and returns the index of the last added row. You can
+    /// call this method to create new empty rows, or with data used to populate the rows, as
+    /// described below.
+    ///           o Array - An array of row objects used to populate a set of new rows. Each
+    ///           row should be a tuple with one field for each column. Use undefined for an empty cell.
+    [<Stub>]
+    member this.addRows<'T>(cells: 'T []) : int = X
+
+    /// Returns a clone of the data table. The result is a deep copy of the data table except
+    /// for the cell properties, row properties, table properties and column properties,
+    /// which are shallow copies; this means that non-primitive properties are copied by
+    /// reference, but primitive properties are copied by value
+    [<Stub>]
+    member this.clone() : DataTable = X
+
     /// Returns a map of all properties for the specified column. Note that the properties
     /// object is returned by reference, so changing values in the retrieved object changes
     /// them in the DataTable.
@@ -332,111 +697,13 @@ type DataTable =
     [<Stub>]
     member this.getColumnProperties(columnIndex) : obj = X
 
-    /// Adds a new column to the data table, and returns the index of the new column. All the
-    /// cells of the new column are assigned a null value.
-    /// 
-    ///     * type should be a string with the data type of the values of the column. The
-    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
-    ///       'timeofday'.  
-    ///     * label should be a string with the label of the column. The column label is 
-    ///       typically displayed as part of the visualization, for example as a column header 
-    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
-    ///       empty string is assigned.  
-    ///     * id should be a string with a unique identifier for the column. If not value is 
-    ///       specified, an empty string is assigned.
-    [<Stub>]
-    member this.addColumn(t: ColumnType) : float = X
-
     /// Returns a map of all properties for the specified row. Note that the properties
     /// object is returned by reference, so changing values in the retrieved object changes
     /// them in the DataTable.
     /// 
     ///     * rowIndex is the index of the row to retrieve properties for.
     [<Stub>]
-    member this.getRowProperties(rowIndex: float) : obj = X
-
-    /// Adds a new column to the data table, and returns the index of the new column. All the
-    /// cells of the new column are assigned a null value.
-    /// 
-    ///     * type should be a string with the data type of the values of the column. The
-    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
-    ///       'timeofday'.  
-    ///     * label should be a string with the label of the column. The column label is 
-    ///       typically displayed as part of the visualization, for example as a column header 
-    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
-    ///       empty string is assigned.  
-    ///     * id should be a string with a unique identifier for the column. If not value is 
-    ///       specified, an empty string is assigned.
-    [<Stub>]
-    member this.addColumn(t: ColumnType, label: string) : float = X
-
-    /// Adds a new column to the data table, and returns the index of the new column. All the
-    /// cells of the new column are assigned a null value.
-    /// 
-    ///     * type should be a string with the data type of the values of the column. The
-    ///       type can be one of the following: 'string' 'number' 'boolean' 'date' 'datetime'
-    ///       'timeofday'.  
-    ///     * label should be a string with the label of the column. The column label is 
-    ///       typically displayed as part of the visualization, for example as a column header 
-    ///       in a table, or as a legend label in a pie chart. If not value is specified, an 
-    ///       empty string is assigned.  
-    ///     * id should be a string with a unique identifier for the column. If not value is 
-    ///       specified, an empty string is assigned.
-    [<Stub>]
-    member this.addColumn(t: ColumnType, label: string, id: string) : float = X
-
-    /// Adds a new row to the data table, and returns the index of the new row.
-    ///     * opt_cellArray [optional] A row object, in JavaScript notation, specifying the
-    ///       data for the new row. If this parameter is not included, this method will
-    ///       simply add a new, empty row to the end of the table. This parameter is an array
-    ///       of cell values: if you only want to specify a value for a cell, just give the
-    ///       cell value (e.g., 55, 'hello'); if you want to specify a formatted value and/or
-    ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
-    ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
-    ///       same method call). Use null or an empty array entry for an empty cell.
-    [<Stub>]
-    member this.addRow() : float = X
-
-    /// Adds a new row to the data table, and returns the index of the new row.
-    ///     * opt_cellArray [optional] A row object, in JavaScript notation, specifying the
-    ///       data for the new row. If this parameter is not included, this method will
-    ///       simply add a new, empty row to the end of the table. This parameter is an array
-    ///       of cell values: if you only want to specify a value for a cell, just give the
-    ///       cell value (e.g., 55, 'hello'); if you want to specify a formatted value and/or
-    ///       properties for the cell, you will have to use a cell objects (e.g., {v:55,
-    ///       f:'Fifty-five', p:'USD'}). You can mix simple values and cell objects in the
-    ///       same method call). Use null or an empty array entry for an empty cell.
-    [<Stub>]
-    member this.addRow(cellArray: Cell []) : float = X
-
-    /// Adds new rows to the data table, and returns the index of the last added row. You can
-    /// call this method to create new empty rows, or with data used to populate the rows, as
-    /// described below.
-    ///     * numOrArray - Either a number or an array:
-    ///           o Number - A number specifying how many new, unpopulated rows to add.
-    ///           o Array - An array of row objects used to populate a set of new rows. Each
-    ///           row is an object as described in addRow(). Use null or an empty array entry
-    ///           for an empty cell.
-    [<Stub>]
-    member this.addRows(num: int) : float = X
-
-    /// Adds new rows to the data table, and returns the index of the last added row. You can
-    /// call this method to create new empty rows, or with data used to populate the rows, as
-    /// described below.
-    ///     * numOrArray - Either a number or an array:
-    ///           o Number - A number specifying how many new, unpopulated rows to add.
-    ///           o Array - An array of row objects used to populate a set of new rows. Each
-    ///           row is an object as described in addRow(). Use null or an empty array entry
-    ///           for an empty cell.
-    [<Stub>]
-    member this.addRows(cells: Cell [] []) : float = X
-
-    /// Returns a clone of the data table. The result is a deep copy of the data table except
-    /// for the cell properties, row properties, table properties and column properties,
-    /// which are shallow copies; this means that non-primitive properties are copied by
-    /// reference, but primitive properties are copied by value
-    [<Stub>]
-    member this.clone() : DataTable = X
+    member this.getRowProperties(rowIndex: int) : obj = X
 
     // CHECK: Does it really uses ()?
     /// Returns a map of all properties for the table.
@@ -456,7 +723,7 @@ type DataTable =
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
     [<Stub>]
-    member this.insertColumn(columnIndex: float, t: string) : unit = X
+    member this.insertColumn(columnIndex: int, t: string) : unit = X
 
     /// Inserts a new column to the data table, at the specifid index. All existing columns
     /// at or after the specified index are shifted to a higher index.
@@ -471,7 +738,7 @@ type DataTable =
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
     [<Stub>]
-    member this.insertColumn(columnIndex: float, t: string, label: string) : unit = X
+    member this.insertColumn(columnIndex: int, t: string, label: string) : unit = X
 
     /// Inserts a new column to the data table, at the specifid index. All existing columns
     /// at or after the specified index are shifted to a higher index.
@@ -486,7 +753,7 @@ type DataTable =
     ///     * id should be a string with a unique identifier for the column. If no value is
     ///       specified, an empty string is assigned.
     [<Stub>]
-    member this.insertColumn(columnIndex: float, t: ColumnType, label: string, id: string) : unit = X
+    member this.insertColumn(columnIndex: int, t: ColumnType, label: string, id: string) : unit = X
 
     /// Insert the specified number of rows at the specified row index.
     /// 
@@ -497,7 +764,7 @@ type DataTable =
     ///       or more populated rows to add at the index. See addRows() for the syntax for
     ///       adding an array of row objects.
     [<Stub>]
-    member this.insertRows(rowIndex: float, number: float) : unit = X
+    member this.insertRows(rowIndex: int, number: int) : unit = X
 
     /// Insert the specified number of rows at the specified row index.
     /// 
@@ -508,33 +775,33 @@ type DataTable =
     ///       or more populated rows to add at the index. See addRows() for the syntax for
     ///       adding an array of row objects.
     [<Stub>]
-    member this.insertRows(rowIndex: float, arr: Cell[]) : unit = X
+    member this.insertRows(rowIndex: int, arr: Cell[]) : unit = X
 
     /// Removes the column at the specified index.
     /// 
     ///     * columnIndex should be a number with a valid column index.
     [<Stub>]
-    member this.removeColumn(columnIndex: float) : unit = X
+    member this.removeColumn(columnIndex: int) : unit = X
 
     /// Removes the specified number of columns starting from the column at the specified index.
     /// 
     ///     * numberOfColumns is the number of columns to remove.
     ///     * columnIndex should be a number with a valid column index.
     [<Stub>]
-    member this.removeColumns(columnIndex: float, numberOfColumns: float) : unit = X
+    member this.removeColumns(columnIndex: int, numberOfColumns: int) : unit = X
 
     /// Removes the row at the specified index.
     /// 
     ///     * rowIndex should be a number with a valid row index.
     [<Stub>]
-    member this.removeRow(rowIndex: float) : unit = X
+    member this.removeRow(rowIndex: int) : unit = X
 
     /// Removes the specified number of rows starting from the row at the specified index.
     /// 
     ///     * numberOfRows is the number of rows to remove.
     ///     * rowIndex should be a number with a valid row index.
     [<Stub>]
-    member this.removeRows(rowIndex: float, numberOfRows: float) : unit = X
+    member this.removeRows(rowIndex: int, numberOfRows: int) : unit = X
 
     /// Sets the value, formatted value, and/or properties, of a cell.
     /// 
@@ -593,7 +860,7 @@ type DataTable =
     ///       can be displayed as a column header in a table, or as the legend label in a pie
     ///       chart.
     [<Stub>]
-    member this.setColumnLabel(columnIndex: float, label: string) : unit = X
+    member this.setColumnLabel(columnIndex: int, label: string) : unit = X
 
     /// Sets a single column property. Some visualizations support row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -605,7 +872,7 @@ type DataTable =
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified column.
     [<Stub>]
-    member this.setColumnProperty(columnIndex: float, name: string, value: obj) : unit = X
+    member this.setColumnProperty(columnIndex: int, name: string, value: obj) : unit = X
 
     /// Sets multiple column properties. Some visualizations support row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -618,7 +885,7 @@ type DataTable =
     ///       column. If null is specified, all additional properties of the column will be
     ///       removed.
     [<Stub>]
-    member this.setColumnProperties(columnIndex: float, properties: obj) : unit = X
+    member this.setColumnProperties(columnIndex: int, properties: obj) : unit = X
 
     /// Sets the formatted value of a cell.
     /// 
@@ -633,7 +900,7 @@ type DataTable =
     ///       set it formattedValue null; to explicitly set an empty formatted value, set it
     ///       to an empty string.
     [<Stub>]
-    member this.setFormattedValue(rowIndex: float, columnIndex: float, formattedValue: string) : unit = X
+    member this.setFormattedValue(rowIndex: int, columnIndex: int, formattedValue: string) : unit = X
 
     /// Sets a cell property. Some visualizations support row, column, or cell properties to
     /// modify their display or behavior; see the visualization documentation to see what
@@ -650,7 +917,7 @@ type DataTable =
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified cell.
     [<Stub>]
-    member this.setProperty(rowIndex:float , columnIndex: float, name: string, value: obj) : unit = X
+    member this.setProperty(rowIndex: int, columnIndex: int, name: string, value: obj) : unit = X
 
     /// Sets multiple cell properties. Some visualizations support row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -666,7 +933,7 @@ type DataTable =
     ///       cell. If null is specified, all additional properties of the cell will be
     ///       removed.
     [<Stub>]
-    member this.setProperties(rowIndex: float, columnIndex: float, properties: obj) : unit = X
+    member this.setProperties(rowIndex: int, columnIndex: int, properties: obj) : unit = X
 
     /// Sets a row property. Some visualizations support row, column, or cell properties to
     /// modify their display or behavior; see the visualization documentation to see what
@@ -680,7 +947,7 @@ type DataTable =
     ///     * value is a value of any type to assign to the specified named property of the
     ///       specified row.
     [<Stub>]
-    member this.setRowProperty(rowIndex: float, name: string, value: obj) : unit = X
+    member this.setRowProperty(rowIndex: int, name: string, value: obj) : unit = X
 
     /// Sets multiple row properties. Some visualizations support row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -693,7 +960,7 @@ type DataTable =
     ///       row. If null is specified, all additional properties of the row will be
     ///       removed.
     [<Stub>]
-    member this.setRowProperties(rowIndex: float, properties: obj) : unit = X
+    member this.setRowProperties(rowIndex: int, properties: obj) : unit = X
 
     /// Sets a single table property. Some visualizations support table, row, column, or cell
     /// properties to modify their display or behavior; see the visualization documentation
@@ -742,67 +1009,18 @@ type DataTable =
     /// method does not return the sorted data.
     // TODO: the doc is not clear about the datatype of the arg.
     [<Stub>]
-    member this.sort(sortColumns: obj) : unit = X
+    member this.sort(sortColumns: int) : unit = X
+    [<Stub>]
+    member this.sort(sortColumns: int[]) : unit = X
+    [<Stub>]
+    member this.sort(sortColumns: SortType) : unit = X
+    [<Stub>]
+    member this.sort(sortColumns: SortType[]) : unit = X
 
     /// Returns a JSON representation of the DataTable that can be passed into the DataTable
     /// constructor.  Format of the Constructor's JavaScript Literal data Parameter
     [<Stub>]
     member this.toJSON() : string = X
-
-type TextStyle [<Inline "{}">] () =
-    [<DefaultValue>]
-    val mutable color: string
-    [<DefaultValue>]
-    val mutable fontName : string 
-    [<DefaultValue>]
-    val mutable fontSize : int
-
-type Axis [<Inline "{}">] () =
-    [<DefaultValue>]
-    val mutable baseline : int
-
-    [<DefaultValue>]
-    val mutable baselineColor : string
-    
-    [<DefaultValue>]
-    val mutable logScale : bool
-    
-    [<DefaultValue>]
-    val mutable minValue : float
-    
-    [<DefaultValue>]
-    val mutable maxValue : float
-
-    /// The direction in which the values along the horizontal axis grow. Specify -1 to reverse the order of the values.
-    [<DefaultValue>]
-    val mutable direction : int
-
-    /// An object that specifies the horizontal axis text style. The object has this format:
-    [<DefaultValue>]
-    val mutable textStyle : TextStyle
-    
-    /// hAxis property that specifies the title of the horizontal axis.
-    [<DefaultValue>]    
-    val mutable title : string
-
-    [<DefaultValue>]
-    val mutable titleTextStyle : TextStyle
-
-    [<DefaultValue>]
-    /// If true, draw the horizontal axis text at an angle, to help fit more text along the axis; if false, draw horizontal axis text upright. Default behavior is to slant text if it cannot all fit when drawn upright.
-    val mutable slantedText : bool
-
-    [<DefaultValue>]
-    /// The angle of the horizontal axis text, if it's drawn slanted. Ignored if hAxis.slantedText is false, or is in auto mode, and the chart decided to draw the text horizontally.
-    val mutable slantedTextAngle : float
-
-    [<DefaultValue>]
-    /// Maximum number of levels of horizontal axis text. If axis text labels become too crowded, the server might shift neighboring labels up or down in order to fit labels closer together. This value specifies the most number of levels to use; the server can use fewer levels, if labels can fit without overlapping.
-    val mutable maxAlternation : float
-
-    [<DefaultValue>]
-    /// How many horizontal axis labels to show, where 1 means show every label, 2 means show every other label, and so on. Default is to try to show as many labels as possible without overlapping.
-    val mutable showTextEvery : int
 
 [<Name "google.visualization.DataView">]
 type DataView =
@@ -898,13 +1116,24 @@ type DataView =
     ///       to the view. The object must have the following properties:
     ///           o calc [function] - A function that takes two values, the DataTable that
     ///           the view is built on, and the number of the row being generated, and
-    ///           returns a single value of type type described below.
+    ///           returns a single value of type type described below. The function signature
+    ///           is func(dataTable, row), where dataTable is the source DataTable, and row is
+    ///           the index of the source data row. The function should return a single value
+    ///           of the type specified by type.
     ///           o type [string] - The JavaScript type of the value that the calc function
     ///           returns.
     ///           o label [Optional, string] - An optional label to assign to this generated
     ///           column.
     ///           o id [Optional, string] - An optional ID to assign to this generated
     ///           column.
+    ///           o sourceColumn - [Optional, number] The source column to use as a value; if
+    ///           specified, do not specify the calc or the type property. This is similar to
+    ///           passing in a number instead of an object, but enables you to specify a role
+    ///           and properties for the new column.
+    ///           o properties [Optional, object] - An object containing any arbitrary properties
+    ///           to assign to this column. If not specified, the view column will have no properties.
+    ///           o role [Optional, string] - A role to assign to this column. If not specified,
+    ///           the existing role will not be imported.
     /// 
     /// // Column 1 is a value in centimeters, and the third column is
     /// // a generated column that converts this into inches.
@@ -914,8 +1143,6 @@ type DataView =
     /// }
     [<Stub>]
     member this.setColumns(columnIndexes: int []) : unit = X
-
-    /// Ibid
     [<Stub>]
     member this.setColumns(columnIndexes: obj []) : unit = X
 
@@ -937,3 +1164,145 @@ type DataView =
     [<Stub>]
     member this.setRows(rowIndexes: int []) : unit = X
 
+type ChartLayoutInterface [<Stub>] internal () =
+    [<Stub>]
+    member this.getBoundingBox() = X<BoundingBox>
+
+    [<Stub>]
+    member this.getChartAreaBoundingBox() = X<BoundingBox>
+
+[<AbstractClass>]
+type ChartOptionsCommon [<Inline "{}">] () =
+
+    [<DefaultValue>]
+    val mutable aggregationTarget : AggregationTarget
+
+    [<DefaultValue>]
+    val mutable animation : Animation
+
+    [<DefaultValue>]
+    val mutable axisTitlesPosition : TitlePosition
+
+    [<DefaultValue>]
+    val mutable backgroundColor : Color
+
+    [<DefaultValue>]
+    val mutable chartArea : BoundingBox
+
+    [<DefaultValue>]
+    val mutable colors : string[]
+
+    [<DefaultValue>]
+    val mutable enableInteractivity : bool
+
+    [<DefaultValue>]
+    val mutable focusTarget : FocusTarget
+
+    [<DefaultValue>]
+    val mutable fontSize : float
+
+    [<DefaultValue>]
+    val mutable fontName : string
+
+    [<DefaultValue>]
+    val mutable hAxis : Axis
+
+    [<DefaultValue>]
+    val mutable height : int
+
+    [<DefaultValue>]
+    val mutable legend : Legend
+
+    /// If set to true, will draw categories from right to left. The default is to draw left-to-right.
+    /// Default Value: false
+    [<DefaultValue>]
+    val mutable reverseCategories : bool
+
+    [<DefaultValue>]
+    val mutable selectionMode : SelectionMode
+
+    [<DefaultValue>]
+    val mutable series : Series[]
+
+    [<DefaultValue>]
+    val mutable theme : string
+
+    [<DefaultValue>]
+    val mutable title : string
+
+    [<DefaultValue>]
+    val mutable titlePosition : TitlePosition
+
+    [<DefaultValue>]
+    val mutable titleTextStyle : TextStyle
+
+    [<DefaultValue>]
+    val mutable tooltip : Tooltip
+
+    [<DefaultValue>]
+    val mutable trendlines : Trendline[]
+
+    [<DefaultValue>]
+    val mutable vAxis : Axis
+
+    [<DefaultValue>]
+    val mutable width : int
+
+[<Require(typeof<Dependencies.JsApi>)>]
+type ChartCommon<'Options> [<Stub>] internal () =
+
+    inherit ChartLayoutInterface()
+
+    /// Draws the chart. The chart accepts further method calls only after the ready event is fired.
+    /// Extended description at https://developers.google.com/chart/interactive/docs/reference#visdraw
+    [<Stub>]
+    member this.draw(data: DataCommon, options: 'Options) = X<unit>
+
+    [<Stub>]
+    member this.getChartLayoutInterface() = X<ChartLayoutInterface>
+
+    /// Returns the logical horizontal value at position, which is an offset from the chart container's left edge. Can be negative.
+    /// Call this after the chart is drawn.
+    [<Stub>]
+    member this.getHAxisValue(position: int, axisIndex: int) = X<float>
+    [<Stub>]
+    member this.getHAxisValue(position: int) = X<float>
+
+    /// Returns an array of the selected chart entities. Selectable entities are points, annotations,
+    /// legend entries and categories. A point or annotation correlates to a cell in the data table,
+    /// a legend entry to a column (row index is null), and a category to a row (column index is null).
+    [<Stub>]
+    member this.getSelection() = X<Selection[]>
+
+    /// Returns the logical vertical value at position, which is an offset from the chart container's top edge.
+    /// Call this after the chart is drawn.
+    [<Stub>]
+    member this.getVAxisValue(position : int, axisIndex : int) = X<float>
+    [<Stub>]
+    member this.getVAxisValue(position : int) = X<float>
+
+    /// Returns the screen x-coordinate of position relative to the chart's container.
+    /// Call this after the chart is drawn.
+    [<Stub>]
+    member this.getXLocation(position: int, axisIndex : int) = X<int>
+    [<Stub>]
+    member this.getXLocation(position: int) = X<int>
+
+    /// Returns the screen y-coordinate of position relative to the chart's container.
+    /// Call this after the chart is drawn.
+    [<Stub>]
+    member this.getYLocation(position: int, axisIndex : int) = X<int>
+    [<Stub>]
+    member this.getYLocation(position: int) = X<int>
+
+    /// Selects a data entry in the visualization—for example, a point in an area chart, or a bar in a bar chart. When this method is called, the visualization should visually indicate what the new selection is. The implementation of setSelection() should not fire a "select" event. Visualizations may ignore part of the selection. For example, a table that can show only selected rows may ignore cell or column elements in its setSelection() implementation, or it can select the entire row.
+    ///
+    /// Every time this method is called, all selected items are deselected, and the new selection list passed in should be applied. There is no explicit way to deselect individual items; to deselect individual items, call setSelection() with the items to remain selected; to deselect all elements, call setSelection(), setSelection(null), or setSelection([]).
+    [<Stub>]
+    member this.setSelection(selection: Selection[]) = X<unit>
+    [<Stub>]
+    member this.setSelection() = X<unit>
+
+    /// Clears the chart, and releases all of its allocated resources.
+    [<Stub>]
+    member this.clearChart() = X<unit>

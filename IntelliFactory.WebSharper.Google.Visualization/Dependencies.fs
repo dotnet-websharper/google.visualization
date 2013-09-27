@@ -8,33 +8,6 @@
 // prohibited without the written consent of the copyright holder.
 //-----------------------------------------------------------------
 // $end{copyright}
-
-namespace IntelliFactory.WebSharper.Google.JsApi
-
-open System
-open System.Configuration
-open IntelliFactory.WebSharper
-
-module R = IntelliFactory.WebSharper.Core.Resources
-
-/// Requires the Google JS API.
-[<Sealed>]
-type JsApi() =
-    interface R.IResource with
-        member this.Render ctx html =
-            let src =
-                String.concat "" [
-                    defaultArg (ctx.GetSetting "Google.JsAPI")
-                        "http://www.google.com/jsapi"
-                    "?key="
-                    defaultArg (ctx.GetSetting "google.jsapi.key")
-                        "your-key-here"
-                ]
-            html.AddAttribute("type", "text/javascript")
-            html.AddAttribute("src", src)
-            html.RenderBeginTag "script"
-            html.RenderEndTag()
-
 namespace IntelliFactory.WebSharper.Google.Visualization
 
 module Dependencies =
@@ -42,8 +15,26 @@ module Dependencies =
     open System.Configuration
     open System.IO
     open IntelliFactory.WebSharper
-    open IntelliFactory.WebSharper.Google.JsApi
     module R = IntelliFactory.WebSharper.Resources
+
+    /// Requires the Google JS API.
+    [<Sealed>]
+    type JsApi() =
+        inherit R.BaseResource("https://www.google.com/jsapi")
+    //    interface R.IResource with
+    //        member this.Render ctx html =
+    //            let src =
+    //                String.concat "" [
+    //                    defaultArg (ctx.GetSetting "Google.JsAPI")
+    //                        "http://www.google.com/jsapi"
+    //                    "?key="
+    //                    defaultArg (ctx.GetSetting "google.jsapi.key")
+    //                        "your-key-here"
+    //                ]
+    //            html.AddAttribute("type", "text/javascript")
+    //            html.AddAttribute("src", src)
+    //            html.RenderBeginTag "script"
+    //            html.RenderEndTag()
 
     let private render (html: System.Web.UI.HtmlTextWriter) (code: string) =
         html.AddAttribute("type", "text/javascript")
@@ -72,8 +63,8 @@ module Dependencies =
         inherit B("table")
 
     [<Require(typeof<JsApi>)>]
-    type AnnotatedTimeLine() =
-        inherit B("annotatedtimeline")
+    type Timeline() =
+        inherit B("timeline")
 
     [<Require(typeof<JsApi>)>]
     type AreaChart() =
@@ -88,8 +79,8 @@ module Dependencies =
         inherit B("corechart")
 
     [<Require(typeof<JsApi>)>]
-    type GeoMap() =
-        inherit B("geomap")
+    type GeoChart() =
+        inherit B("geochart")
 
     [<Require(typeof<JsApi>)>]
     type IntensityMap() =

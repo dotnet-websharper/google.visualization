@@ -9,15 +9,15 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Visualizations
+namespace IntelliFactory.WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
-open IntelliFactory.WebSharper.Google.Visualization.Base.Helpers
 
 /// Dummy type to simulate the region enumeration.
+[<Require(typeof<Dependencies.JsApi>)>]
 type Region =
     [<Inline "$s">]
     static member FromString (s: string) : Region = X

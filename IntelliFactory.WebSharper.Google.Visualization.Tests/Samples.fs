@@ -22,8 +22,6 @@ module Client =
     open IntelliFactory.WebSharper.Google.Visualization.Base
     open IntelliFactory.WebSharper.EcmaScript
 
-    type Color = Visualizations.Color
-
     module Util =
         open IntelliFactory.WebSharper
         [<Inline "alert($msg)">]
@@ -34,7 +32,7 @@ module Client =
     module Data =
 
         [<JavaScript>]
-        let V: obj -> Cell = Cell.Value
+        let V x = Cell(v = x)
 
         [<JavaScript>]
         let TableData () =
@@ -78,25 +76,14 @@ module Client =
         [<JavaScript>]
         let ATLData () =
             let data = new Base.DataTable()
-            data.addColumn(DateType, "Name") |> ignore
-            data.addColumn(NumberType, "Sold pencils") |> ignore
-            data.addColumn(StringType, "Title") |> ignore
-            data.addRows(6) |> ignore
-
-            data.setCell(0, 0, new Date(2008, 1 ,1)) |> ignore
-            data.setCell(1, 0, new Date(2008, 1 ,2)) |> ignore
-            data.setCell(2, 0, new Date(2008, 1 ,3)) |> ignore
-            data.setCell(3, 0, new Date(2008, 1 ,4)) |> ignore
-            data.setCell(4, 0, new Date(2008, 1 ,5)) |> ignore
-            data.setCell(5, 0, new Date(2008, 1 ,6)) |> ignore
-
-            data.setCell(0, 1, 30000.) |> ignore
-            data.setCell(1, 1, 14045.) |> ignore
-            data.setCell(2, 1, 55022.) |> ignore
-            data.setCell(3, 1, 75284.) |> ignore
-            data.setCell(4, 1, 41476.) |> ignore
-            data.setCell(5, 1, 33322.) |> ignore
-            data.setCell(3, 2, "Bought pencils") |> ignore
+            data.addColumn(StringType, "President") |> ignore
+            data.addColumn(DateType, "Start") |> ignore
+            data.addColumn(DateType, "End") |> ignore
+            data.addRows [|
+                ("Washington", new Date(1789, 3, 29), new Date(1797, 2, 3))
+                ("Adams", new Date(1797, 2, 3), new Date(1801, 2, 3))
+                ("Jefferson", new Date(1801, 2, 3), new Date(1809, 2, 3))
+            |] |> ignore
             data
 
         [<JavaScript>]
@@ -160,7 +147,7 @@ module Client =
             data.setValue(2, 3, new Date(2006, 7, 16))
 
             // Create three formatters in three styles.
-            let optionsWith (s: string) = {Formatters.DateFormatOptions.Default with formatType = s}
+            let optionsWith (s: string) = Formatters.DateFormatOptions(formatType = s)
             let formatterLong = new Formatters.DateFormat(optionsWith "long")
             let formatterMedium = new Formatters.DateFormat(optionsWith "medium")
             let formatterShort = new Formatters.DateFormat(optionsWith "short")
@@ -296,8 +283,8 @@ module Client =
             data.addColumn(StringType, "ToolTip") |> ignore
             data.addRows(
                 [|
-                  [| {Cell.Empty with v="Mike"; f="Mike<div style=\"color:red; font-style:italic\">President</div>"}; V ""; V "The President"|]
-                  [| {Cell.Empty with v="Jim"; f="Jim<div style=\"color:red; font-style:italic\">Vice President<div>"}; V "Mike"; V "VP"|]
+                  [| Cell(v="Mike", f="Mike<div style=\"color:red; font-style:italic\">President</div>"); V ""; V "The President"|]
+                  [| Cell(v="Jim", f="Jim<div style=\"color:red; font-style:italic\">Vice President<div>"); V "Mike"; V "VP"|]
                   [| V "Alice"; V "Mike"; V ""|]
                   [| V "Bob";   V "Jim";  V "Bob Sponge"|]
                   [| V "Carol"; V "Bob";  V "" |] |]) |> ignore
@@ -330,11 +317,11 @@ module Client =
             data.addColumn(NumberType, "Revenues Change") |> ignore
             data.addRows(
                 [|
-                    [|V "Shoes"; { Cell.Empty with v = 12; f = "12.0%"}|]
-                    [|V "Sports"; { Cell.Empty with v = -7.3; f = "-7.3%"}|]
-                    [|V "Toys"; { Cell.Empty with v = 0; f = "0%"}|]
-                    [|V "Electronics"; { Cell.Empty with v = -2.1; f = "-2.1%"}|]
-                    [|V "Food"; { Cell.Empty with v = 22; f = "22.0%"} |] |]) |> ignore
+                    [|V "Shoes"; Cell(v = 12, f = "12.0%")|]
+                    [|V "Sports"; Cell(v = -7.3, f = "-7.3%")|]
+                    [|V "Toys"; Cell(v = 0, f = "0%")|]
+                    [|V "Electronics"; Cell(v = -2.1, f = "-2.1%")|]
+                    [|V "Food"; Cell(v = 22, f = "22.0%") |] |]) |> ignore
             data
 
         [<JavaScript>]
@@ -427,12 +414,13 @@ module Client =
         let AreaChartEvents () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.AreaChart(container.Body)
-                let options = {Visualizations.AreaChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         title = "Company Performance"}
+                let visualization = new AreaChart(container.Body)
+                let options =
+                    AreaChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        title = "Company Performance")
                 let event = Google.Visualization.Events.AreaChart.OnMouseOver visualization
                 event.Add (fun args ->
                     Util.Alert(string args.column + ", " + string args.row))
@@ -444,11 +432,11 @@ module Client =
         let PatternFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true }
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
                 visualization.draw(PatternFormatData (), options))
 
 
@@ -457,33 +445,33 @@ module Client =
         let NumberFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true}
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
                 visualization.draw(NumberFormatData (), options))
 
         [<JavaScript>]
         let DateFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true }
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
                 visualization.draw(DateFormatData (), options))
 
         [<JavaScript>]
         let ColorFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true }
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
                 let colorFormat= new Formatters.ColorFormat()
                 colorFormat.addRange(-20000, 0, "white", "orange")
                 colorFormat.addRange(20000, null, "red", "#33ff33")
@@ -493,23 +481,23 @@ module Client =
         let BarFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true }
-                let barFormat = new Formatters.BarFormat({Formatters.BarFormatOptions.Default with base' = 22.})
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
+                let barFormat = new Formatters.BarFormat(Formatters.BarFormatOptions(``base`` = 22.))
                 visualization.draw(FormatDataWith barFormat, options))
 
         [<JavaScript>]
         let ArrowFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
+                let visualization = new Table(container.Body)
                 let options =
-                    {Visualizations.TableOptions.Default with
-                        allowHtml = true
-                        showRowNumber = true }
+                    TableOptions(
+                        allowHtml = true,
+                        showRowNumber = true)
                 let arrowFormat = new Formatters.ArrowFormat(Formatters.ArrowFormatOptions.Base 22.)
                 visualization.draw(FormatDataWith arrowFormat, options))
 
@@ -517,39 +505,38 @@ module Client =
         let OrgChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.OrgChart(container.Body)
-                let options = {Visualizations.OrgChartOptions.Default
-                                with allowHtml = true}
+                let visualization = new OrgChart(container.Body)
+                let options = OrgChartOptions(allowHtml = true)
                 visualization.draw(OrgChartData (), options);)
 
         [<JavaScript>]
         let ScatterChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.ScatterChart(container.Body)
-                let vAxis = new Axis()
-                let hAxis = new Axis()
-                vAxis.title <- "Weight"
-                hAxis.title <- "Age"
-                let options = {Visualizations.ScatterChartOptions.Default
-                                with width = 400.
-                                     height = 240.
-                                     pointSize = 5.
-                                     legend = Visualizations.None
-                                     hAxis = hAxis
-                                     vAxis = vAxis}
+                let visualization = new ScatterChart(container.Body)
+                let vAxis = new Axis(title = "Weight")
+                let hAxis = new Axis(title = "Age")
+                let options =
+                    ScatterChartOptions(
+                        width = 400,
+                        height = 240,
+                        pointSize = 5,
+                        legend = Legend(position = LegendPosition.None),
+                        hAxis = hAxis,
+                        vAxis = vAxis)
                 visualization.draw(ScatterData (), options))
 
         [<JavaScript>]
         let PieChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.PieChart(container.Body)
-                let options = {Visualizations.PieChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         is3D = true
-                                         title = "My Daily Activities"}
+                let visualization = new PieChart(container.Body)
+                let options =
+                    PieChartOptions(
+                        width = 400,
+                        height = 240,
+                        is3D = true,
+                        title = "My Daily Activities")
                 visualization.draw(PieChartData (), options))
 
 
@@ -557,70 +544,74 @@ module Client =
         let MotionChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.MotionChart(container.Body)
-                let options = {Visualizations.MotionChartOptions.Default
-                                    with width = 600.
-                                         height = 300.}
+                let visualization = new MotionChart(container.Body)
+                let options =
+                    MotionChartOptions(
+                        width = 600.,
+                        height = 300.)
                 visualization.draw(MotionChartData (), options))
 
         [<JavaScript>]
         let BlogMotionChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.MotionChart(container.Body)
-                let options = {Visualizations.MotionChartOptions.Default
-                                    with width = 600.
-                                         height = 300.}
+                let visualization = new MotionChart(container.Body)
+                let options =
+                    MotionChartOptions(
+                        width = 600.,
+                        height = 300.)
                 visualization.draw(BlogMotionChartData (), options))
 
         [<JavaScript>]
         let IntensityMap () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.IntensityMap(container.Body)
-                visualization.draw(IntensityMapData (), Visualizations.IntensityMapOptions.Default))
+                let visualization = new IntensityMap(container.Body)
+                visualization.draw(IntensityMapData (), IntensityMapOptions()))
 
         [<JavaScript>]
         let GeoMapMarkers () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.GeoMap(container.Body)
-                let options = {Visualizations.GeoMapOptions.Default
-                                    with region = Visualizations.Countries.Alpha2Codes.US
-                                         colors = [|0xFF8747; 0xFFB581; 0xc06000|] // orange colors
-                                         dataMode = Visualizations.Markers
-                              }
+                let visualization = new GeoChart(container.Body)
+                let options =
+                    GeoChartOptions(
+                        region = Countries.Alpha2Codes.US,
+                        colorAxis = GeoChartColorAxis(colors = [|"#FF8747"; "#FFB581"; "#c06000"|]),
+                        displayMode = GeoChartDisplayMode.Markers)
                 visualization.draw(GeoMapMarkersData (), options))
 
         [<JavaScript>]
         let GeoMap () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.GeoMap(container.Body)
-                visualization.draw(GeoMapData (), Visualizations.GeoMapOptions.Default))
+                let visualization = new GeoChart(container.Body)
+                visualization.draw(GeoMapData (), GeoChartOptions()))
 
         [<JavaScript>]
         let ColumnChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.ColumnChart(container.Body)
-                let options = {Visualizations.ColumnChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         title = "Company Performance"}
+                let visualization = new ColumnChart(container.Body)
+                let options =
+                    ColumnChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        title = "Company Performance")
                 visualization.draw(AreaChartData (), options))
 
         [<JavaScript>]
         let LineChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.LineChart(container.Body)
-                let options = {Visualizations.LineChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         title = "Company Performance"}
+                let visualization = new LineChart(container.Body)
+                let options =
+                    LineChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        title = "Company Performance")
                 visualization.draw(AreaChartData (), options))
 
 
@@ -628,39 +619,42 @@ module Client =
         let BarChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.BarChart(container.Body)
-                let options = {Visualizations.BarChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         title = "Company Performance"}
+                let visualization = new BarChart(container.Body)
+                let options =
+                    BarChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        title = "Company Performance")
                 visualization.draw(AreaChartData (), options))
 
         [<JavaScript>]
         let Gauge () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Gauge(container.Body)
-                let options = {Visualizations.GaugeOptions.Default
-                                    with width = 400.
-                                         height = 120.
-                                         redFrom = 90.
-                                         redTo = 100.
-                                         yellowFrom = 75.
-                                         yellowTo = 90.
-                                         minorTicks = 5.}
+                let visualization = new Gauge(container.Body)
+                let options =
+                    GaugeOptions(
+                        width = 400.,
+                        height = 120.,
+                        redFrom = 90.,
+                        redTo = 100.,
+                        yellowFrom = 75.,
+                        yellowTo = 90.,
+                        minorTicks = 5.)
                 visualization.draw(GaugeData (), options))
 
         [<JavaScript>]
         let AreaChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.AreaChart(container.Body)
-                let options = {Visualizations.AreaChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         title = "Company Performance"}
+                let visualization = new AreaChart(container.Body)
+                let options =
+                    AreaChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        title = "Company Performance")
                 visualization.draw(AreaChartData (), options))
 
 
@@ -668,29 +662,30 @@ module Client =
         let ColorObject () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.AreaChart(container.Body)
-                let options = {Visualizations.AreaChartOptions.Default
-                                    with width = 400.
-                                         height = 240.
-                                         legend = Visualizations.Bottom
-                                         backgroundColor = Color.HtmlColor "#000000"
-                                         // FIXME: legendBackgroundColor = Color.FromProperties "black" "pink" 5
-                                         title = "Company Performance"}
+                let visualization = new AreaChart(container.Body)
+                let options =
+                    AreaChartOptions(
+                        width = 400,
+                        height = 240,
+                        legend = Legend(position = LegendPosition.Bottom),
+                        backgroundColor = Color.HtmlColor "#000000",
+                        // FIXME: legendBackgroundColor = Color.FromProperties "black" "pink" 5,
+                        title = "Company Performance")
                 visualization.draw(AreaChartData (), options))
 
         [<JavaScript>]
-        let AnnotatedTimeLine () =
+        let Timeline () =
             Div [Attr.Style "width:700px; height:240px;"]
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.AnnotatedTimeLine(container.Body)
-                visualization.draw(ATLData (), Visualizations.AnnotatedTimeLineOptions.Default))
+                let visualization = new Timeline(container.Body)
+                visualization.draw(ATLData (), TimelineOptions()))
 
         [<JavaScript>]
         let TableExample () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Visualizations.Table(container.Body)
-                visualization.draw(TableData (), Visualizations.TableOptions.Default))
+                let visualization = new Table(container.Body)
+                visualization.draw(TableData (), TableOptions()))
 
         [<JavaScript>]
         let ViewExample () =
@@ -698,15 +693,15 @@ module Client =
                   :: [for view in Views ()
                        -> Div [Attr.Style "width:500px"]
                           |>! OnAfterRender (fun container ->
-                                let visualization = new Visualizations.Table(container.Body)
-                                visualization.draw(view, Visualizations.TableOptions.Default))])
+                                let visualization = new Table(container.Body)
+                                visualization.draw(view, TableOptions()))])
 
         [<JavaScript>]
         let TableWithRowNumbers () =
             Div []
             |>! OnAfterRender (fun container ->
-                let visualization = new Visualizations.Table(container.Body)
-                let options = {Visualizations.TableOptions.Default with showRowNumber = true}
+                let visualization = new Table(container.Body)
+                let options = TableOptions(showRowNumber = true)
                 visualization.draw(TableData (), options))
 
         [<JavaScript>]
@@ -715,13 +710,14 @@ module Client =
             Div [Attr.Id "myTreeMap"; Attr.Style "width: 1100px; height: 500px;"]
             |>! OnAfterRender (fun container ->
             
-                let visualization = new Visualizations.TreeMap(container.Body)
-                let options = new Visualizations.TreeMapOptions()
-                options.minColor <- "#f00"
-                options.midColor <- "#ddd"
-                options.fontColor <- "black"
-                options.showScale <- true
-                options.headerHeight <- 15
+                let visualization = new TreeMap(container.Body)
+                let options =
+                    TreeMapOptions(
+                        minColor = "#f00",
+                        midColor = "#ddd",
+                        fontColor = "black",
+                        showScale = true,
+                        headerHeight = 15)
                 visualization.draw(TreeMapData (), options))
 
     open SamplesInternals
@@ -755,7 +751,7 @@ module Client =
                  AreaChart ()
                  Gauge ()
                  ColorObject ()
-                 AnnotatedTimeLine ()
+                 Timeline ()
                  TableExample ()
                  ViewExample ()
                  TableWithRowNumbers ()
