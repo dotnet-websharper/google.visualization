@@ -17,7 +17,7 @@ With the Google Visualization WebSharper™ Extensions you can develop
 WebSharper applications that use the Google Visualization API using
 nothing but F# code.
 
-See the [Examples page](docs/Examples.md) to learn how to use
+See the [Examples page](Examples.md) to learn how to use
 Google Visualization with WebSharper. Also check out the
-[screenshots](docs/Screenshots.md) for some example
+[screenshots](Screenshots.md) for some example
 visualizations.

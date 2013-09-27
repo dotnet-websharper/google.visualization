@@ -81,7 +81,7 @@ following:
                 legend = Legend(position = LegendPosition.Top),
                 title = "Company Performance"))
 
-![Line Chart](visualization-05.png)
+![Line Chart](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/visualization-05.png)
 
 And for a table, just change the type of the visualization object:
 
@@ -103,7 +103,7 @@ views of the data.  The following example demonstrates its use.
 Let's take `MyData` from the first example. When visualized using
 `Table`, this `DataTable` will look like this:
 
-![DV1](DV1.png)
+![DV1](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/DV1.png)
 
 The following code creates 10 different `DataView` objects based on
 `MyData`:
@@ -126,7 +126,7 @@ You now can hide and show columns by column index:
 
 The result looks like this:
 
-![DV2](DV2.png)\
+![DV2](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/DV2.png)\
 
 Another useful method allows you to select and order a subset of the
 columns and rows.
@@ -137,7 +137,7 @@ columns and rows.
 
 Result:
 
-![DV3](DV3.png)\
+![DV3](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/DV3.png)\
 
 The set methods can be used together with the `getSortedRows`.  This
 method returns an array of indices that correspond to a sort criteria.
@@ -160,7 +160,7 @@ the sorting should be done in ascending or descending order.
 
 Result:
 
-![DV4](DV4.png)\
+![DV4](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/DV4.png)\
 
 The `setColumns` method is overloaded to add calculated columns.  A
 simple example is the following:
@@ -189,5 +189,5 @@ accumulated column of the values in column 1.
 
 The result is the following:
 
-![DV5](DV5.png)\
+![DV5](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/DV5.png)\
 
