@@ -1,4 +1,4 @@
-% Screenshots
+# Screenshots
 
 ![Motion Charts](visualization-01.png)
 

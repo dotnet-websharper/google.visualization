@@ -1,4 +1,4 @@
-% Examples
+# Examples
 
 ## DataTable
 
@@ -11,12 +11,11 @@ records:
 
     #fsharp
     [<JavaScript>]
-    let TableData =
+    let MyData =
         let data = new Base.DataTable()
         data.addColumn(StringType, "Name") |> ignore
         data.addColumn(NumberType, "Height") |> ignore
         data.addColumn(BooleanType, "Smokes") |> ignore
-        data.addRows(3.) |> ignore
         data.setCell(0., 0., "Tong Ning mu") |> ignore
         data.setCell(1., 0., "Huang Ang fa") |> ignore
         data.setCell(2., 0., "Teng nu") |> ignore
@@ -41,92 +40,68 @@ Another way to build data is the `addRows` method.
 
     #fsharp
     [<JavaScript>]
-    let V: obj -> Cell = Cell.Value
-
-    [<JavaScript>]
-    let TableData =
+    let OtherData =
         let data = new Base.DataTable()
-        data.addColumn(StringType, "Fruit") |> ignore
         data.addColumn(DateType, "Date") |> ignore
         data.addColumn(NumberType, "Sales") |> ignore
         data.addColumn(NumberType, "Expenses") |> ignore
-        data.addColumn(StringType, "Location") |> ignore
-        [|
-          [|
-            V "Apples" 
-            V (new JDate(1988, 0, 1)) 
-            V 1000
-            V 300
-            V "East"
-          |]
-          [| 
-            V "Oranges"
-            V (new JDate(1988, 0, 1))
-            V 1150
-            V 200
-            V "West"|]
-          [| 
-            V "Bananas"
-            V (new JDate(1988, 0, 1))
-            V 300;
-            V 250
-            V "West"
-          |]
-          [| 
-            V "Apples" 
-            V (new JDate(1989, 6, 1))
-            V 1200
-            V 400
-            V "East"
-          |]
-          [| 
-            V "Oranges"
-            V (new JDate(1989, 6, 1))
-            V 750;
-            V 150
-            V "West"
-          |]
-          [| 
-            V "Bananas"
-            V (new JDate(1989, 6, 1))
-            V 788;
-            V 617
-            V "West"
-          |] 
+        data.addRows [|
+          (new Date(2004, 0, 1), 1000, 300)
+          (new Date(2005, 0, 1), 1150, 450)
+          (new Date(2006, 0, 1), 650, 1120)
+          (new Date(2007, 0, 1), 1020, 550)
         |]
-        |> data.addRows
         |> ignore
 
-Each array corresponds to a row in the `DataTable`.
+Each tuple corresponds to a row in the `DataTable`.
+
+In case you need to provide more information about individual values,
+such as formatting information or custom properties, you can use
+arrays of `Base.Cell` objects instead of tuples of values.
+
+## Visualization
+
+Once you have filled your `DataTable`, visualizing it is as simple as:
+
+  * creating the type of visualization you want, passing the HTML
+    element into which you want to render it.
+  * calling the `draw` method on it with your data and any potential
+    rendering options.
+
+For example, to view the above `OtherData` using a line chart, use the
+following:
+
+    [<JavaScript>]
+    let MyLineChart =
+        let visualization = new LineChart(container.Body)
+        visualization.draw(OtherData,
+            LineChartOptions(
+                width = 400,
+                height = 240,
+                legend = Legend(position = LegendPosition.Top),
+                title = "Company Performance"))
+
+![Line Chart](visualization-05.png)
+
+And for a table, just change the type of the visualization object:
+
+    [<JavaScript>]
+    let MyTable =
+        let visualization = new Table(container.Body)
+        visualization.draw(OtherData,
+            TableOptions(
+                width = 400,
+                height = 240,
+                legend = Legend(position = LegendPosition.Top),
+                title = "Company Performance"))
 
 ## DataView
 
 `DataView` allows you to manipulate a `DataTable` to provide multiple
 views of the data.  The following example demonstrates its use.
 
-A DataView can be seen as a read-only version of the `DataTable`.  You
-start by defining the following `DataTable`:
-
-    #fsharp
-    [<JavaScript>]
-    let MyData =
-        let data = new Base.DataTable()
-        data.addColumn(StringType, "Name") |> ignore
-        data.addColumn(NumberType, "Height") |> ignore
-        data.addColumn(BooleanType, "Smokes") |> ignore
-        data.addRows(3) |> ignore
-        data.setCell(0, 0, "Tong Ning mu") |> ignore
-        data.setCell(1, 0, "Huang Ang fa") |> ignore
-        data.setCell(2, 0, "Teng nu") |> ignore
-        data.setCell(0, 1, 174.) |> ignore
-        data.setCell(1, 1, 523.) |> ignore
-        data.setCell(2, 1, 86.) |> ignore
-        data.setCell(0, 2, true) |> ignore
-        data.setCell(1, 2, false) |> ignore
-        data.setCell(2, 2, true) |> ignore
-        data
-
-When visualized, this `DataTable` will look like this:
+Let's take `MyData` from the first example. When visualized using
+`Table`, this `DataTable` will look like this:
 
 ![DV1](DV1.png)
 
@@ -179,8 +154,8 @@ the sorting should be done in ascending or descending order.
 
     #fsharp
     let complexOrder =
-	let by i b = SortType.By(i, b)
-	views.[6].getSortedRows([| by 2 false; by 0 true|])
+        let by i b = SortType.By(i, b)
+        views.[6].getSortedRows([| by 2 false; by 0 true|])
     views.[6].setRows    complexOrder
 
 Result:
@@ -202,16 +177,15 @@ accumulated column of the values in column 1.
     let accum = 
         Column.Float(
             (fun (t, r) ->
-		seq {
-		    for i in 0..(int r) -> 
-			t.getValue(i, 1) 
-			    |> unbox<float>
-		}
-		|> Seq.sum),
-	    "Accum")
-        let idx = Column.Index
-        views.[8].setColumns [| idx 0; idx 1; idx 2; accum |]
-        views
+                seq {
+                    for i in 0..(int r) -> 
+                        As<float> (t.getValue(i, 1))
+                }
+                |> Seq.sum),
+            "Accum")
+    let idx = Column.Index
+    views.[8].setColumns [| idx 0; idx 1; idx 2; accum |]
+    views
 
 The result is the following:
 
