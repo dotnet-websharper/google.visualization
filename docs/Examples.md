@@ -191,5 +191,5 @@ accumulated column of the values in column 1.
 
 The result is the following:
 
-![DV5](docs/images/DV5.png)\
+![DV5](images/DV5.png)\
 
