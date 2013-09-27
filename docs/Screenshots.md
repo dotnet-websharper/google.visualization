@@ -1,6 +1,6 @@
 # Screenshots
 
-![Motion Charts](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/visualization-01.png)
+![Motion Charts](/images/visualization-01.png)
 
 ![Intensity Maps](https://bitbucket.org/IntelliFactory/websharper.google.visualization/raw/default/docs/images/visualization-02.png)
 
