@@ -9,7 +9,7 @@ object.
 The following example creates a simple DataTable with 3 columns and 3
 records:
 
-    #fsharp
+    #!fsharp
     [<JavaScript>]
     let MyData =
         let data = new Base.DataTable()
@@ -38,7 +38,7 @@ the `DataTable`.  Then you set every item using the `setCell` method.
 
 Another way to build data is the `addRows` method.
 
-    #fsharp
+    #!fsharp
     [<JavaScript>]
     let OtherData =
         let data = new Base.DataTable()
@@ -71,6 +71,7 @@ Once you have filled your `DataTable`, visualizing it is as simple as:
 For example, to view the above `OtherData` using a line chart, use the
 following:
 
+    #!fsharp
     [<JavaScript>]
     let MyLineChart =
         let visualization = new LineChart(container.Body)
@@ -85,6 +86,7 @@ following:
 
 And for a table, just change the type of the visualization object:
 
+    #!fsharp
     [<JavaScript>]
     let MyTable =
         let visualization = new Table(container.Body)
@@ -108,7 +110,7 @@ Let's take `MyData` from the first example. When visualized using
 The following code creates 10 different `DataView` objects based on
 `MyData`:
 
-    #fsharp
+    #!fsharp
     [<JavaScript>]
     let Views =
         let views = 
@@ -120,7 +122,7 @@ The following code creates 10 different `DataView` objects based on
 
 You now can hide and show columns by column index:
 
-    #fsharp
+    #!fsharp
     views.[1].hideColumns [|1; 2|]
     views.[2].hideRows [|0; 2|]
 
@@ -131,7 +133,7 @@ The result looks like this:
 Another useful method allows you to select and order a subset of the
 columns and rows.
 
-    #fsharp
+    #!fsharp
     views.[3].setColumns [|1; 1|]
     views.[4].setRows [|0; 2|]
 
@@ -144,7 +146,7 @@ method returns an array of indices that correspond to a sort criteria.
 There are 2 methods supported.  The first allows you to specify the
 column you want to sort by.
 
-    #fsharp
+    #!fsharp
     let simpleOrder = views.[5].getSortedRows(1)
     views.[5].setRows simpleOrder
 
@@ -152,7 +154,7 @@ The second allows you to add an array of sorting criteria, being the
 first the most important.  This method receives a boolean to select if
 the sorting should be done in ascending or descending order.
 
-    #fsharp
+    #!fsharp
     let complexOrder =
         let by i b = SortType.By(i, b)
         views.[6].getSortedRows([| by 2 false; by 0 true|])
@@ -165,7 +167,7 @@ Result:
 The `setColumns` method is overloaded to add calculated columns.  A
 simple example is the following:
 
-    #fsharp
+    #!fsharp
     let c1 = Column.Float((fun _ -> 5.), "Five")
     views.[7].setColumns [| c1 |]
 
@@ -173,7 +175,7 @@ The function receives the current row of the column and the
 `DataTable` object.  With these capabilities it is easy to create an
 accumulated column of the values in column 1.
 
-    #fsharp
+    #!fsharp
     let accum = 
         Column.Float(
             (fun (t, r) ->
