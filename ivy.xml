@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-  <info organisation="IntelliFactory" module="if-ws-google-visualization" revision="2.5" />
+  <info organisation="IntelliFactory" module="websharper.google.visualization" revision="2.5" />
   <dependencies>
     <dependency name="WebSharper" rev="latest.integration"  />
   </dependencies>
