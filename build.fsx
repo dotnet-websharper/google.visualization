@@ -19,7 +19,13 @@ bt.Solution [
     test
 
     bt.NuGet.CreatePackage()
-        .Description("WebSharper Extensions for Google Visualization")
+        .Configure(fun c ->
+            { c with
+                Title = Some "WebSharper.Google.Visualization-2013.08.27"
+                LicenseUrl = Some "http://websharper.com/licensing"
+                ProjectUrl = Some "https://github.com/intellifactory/websharper.google.visualization"
+                Description = "WebSharper Extensions for Google Visualization 2013.08.27"
+                RequiresLicenseAcceptance = true })
         .Add(main)
 
 ]
