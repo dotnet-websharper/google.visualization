@@ -1,11 +1,5 @@
 <ivy-module version="2.0">
   <info organisation="IntelliFactory" module="if-ws-google-visualization" revision="2.5" />
-  <publications>
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="dll" type="bin" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="pdb" type="debug" />
-    <artifact name="IntelliFactory.WebSharper.Google.Visualization" ext="xml" type="doc" />
-    <artifact name="if-ws-google-visualization-docs" ext="zip" type="doc" />
-  </publications>
   <dependencies>
     <dependency name="WebSharper" rev="latest.integration"  />
   </dependencies>

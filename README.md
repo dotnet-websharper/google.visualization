@@ -1,4 +1,4 @@
-# WebSharper.Google.Visualization
+# WebSharper.Google.Visualization 2013.08.27
 
 [Google Visualization](https://developers.google.com/chart/)
 development support for
