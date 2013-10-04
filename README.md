@@ -152,7 +152,7 @@ views.[2].hideRows [|0; 2|]
 
 The result looks like this:
 
-![DV2](docs/DV2.png)\
+![DV2](docs/DV2.png)
 
 Another useful method allows you to select and order a subset of the
 columns and rows.
@@ -164,7 +164,7 @@ views.[4].setRows [|0; 2|]
 
 Result:
 
-![DV3](docs/DV3.png)\
+![DV3](docs/DV3.png)
 
 The set methods can be used together with the `getSortedRows`.  This
 method returns an array of indices that correspond to a sort criteria.
@@ -189,7 +189,7 @@ views.[6].setRows complexOrder
 
 Result:
 
-![DV4](docs/DV4.png)\
+![DV4](docs/DV4.png)
 
 The `setColumns` method is overloaded to add calculated columns.  A
 simple example is the following:
@@ -220,7 +220,7 @@ views
 
 The result is the following:
 
-![DV5](docs/DV5.png)\
+![DV5](docs/DV5.png)
 
 # Screenshots
 
