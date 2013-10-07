@@ -1,12 +1,12 @@
 # Overview
 
 This WebSharper Extension provides WebSharper bindings to the [Google
-Visualization](https://developers.google.com/chart/) library that
-provides rich, interactive charts and other data visualizations
-that run in the browser. It supports many common chart type
-sincluding image and interactive charts, maps, and data
-tables. The complete list of examples can be found at the Google
-Chart Tools
+Visualization](https://developers.google.com/chart/) library, version
+2013.08.27, that provides rich, interactive charts and other data
+visualizations that run in the browser. It supports many common chart
+type sincluding image and interactive charts, maps, and data
+tables. The complete list of examples can be found at the Google Chart
+Tools
 [Gallery](https://developers.google.com/chart/interactive/docs/gallery).
 
 The visualizations run in all modern JavaScript-enabled
