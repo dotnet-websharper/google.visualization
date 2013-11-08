@@ -16,6 +16,7 @@ open IntelliFactory.WebSharper.Google.Visualization
 open IntelliFactory.WebSharper.Google.Visualization.Base
 
 module Enumerations =
+    [<RequireQualifiedAccess>]
     type PieChartLegendPosition = 
         | [<Constant "right" >] Right
         | [<Constant "left" >]  Left
@@ -24,6 +25,7 @@ module Enumerations =
         | [<Constant "none" >] None
         | [<Constant "label" >] Label
 
+[<RequireQualifiedAccess>]
 type PieSliceText =
     | [<Constant "percentage">] Percentage
     | [<Constant "value">] Value
