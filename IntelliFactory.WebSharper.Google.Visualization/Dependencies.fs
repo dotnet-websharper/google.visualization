@@ -97,3 +97,6 @@ module Dependencies =
     [<Require(typeof<JsApi>)>]
     type TreeMap() =
         inherit B("treemap")
+
+    [<assembly:Require(typeof<JsApi>)>]
+    do ()
