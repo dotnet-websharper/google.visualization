@@ -12,6 +12,7 @@
 namespace IntelliFactory.WebSharper.Google.Visualization
 
 open IntelliFactory.WebSharper
+open IntelliFactory.WebSharper.JavaScript
 
 type BoundingBox [<Inline "{}">] () =
     [<DefaultValue>]
@@ -240,6 +241,7 @@ type Trendline [<Inline "{}">] () =
 namespace IntelliFactory.WebSharper.Google.Visualization.Base
 
 open IntelliFactory.WebSharper
+open IntelliFactory.WebSharper.JavaScript
 open IntelliFactory.WebSharper.Google.Visualization
 
 // Simple wrap to improve IntelliSense

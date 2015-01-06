@@ -17,10 +17,10 @@ namespace IntelliFactory.WebSharper.Google.Visualization.Tests
 
 module Client =
     open IntelliFactory.WebSharper
-    open IntelliFactory.WebSharper.Html
+    open IntelliFactory.WebSharper.JavaScript
+    open IntelliFactory.WebSharper.Html.Client
     open IntelliFactory.WebSharper.Google.Visualization
     open IntelliFactory.WebSharper.Google.Visualization.Base
-    open IntelliFactory.WebSharper.EcmaScript
 
     module Util =
         open IntelliFactory.WebSharper
@@ -414,7 +414,7 @@ module Client =
         let AreaChartEvents () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new AreaChart(container.Body)
+                let visualization = new AreaChart(container.Dom)
                 let options =
                     AreaChartOptions(
                         width = 400,
@@ -432,7 +432,7 @@ module Client =
         let PatternFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -445,7 +445,7 @@ module Client =
         let NumberFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -456,7 +456,7 @@ module Client =
         let DateFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -467,7 +467,7 @@ module Client =
         let ColorFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -481,7 +481,7 @@ module Client =
         let BarFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -493,7 +493,7 @@ module Client =
         let ArrowFormat () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options =
                     TableOptions(
                         allowHtml = true,
@@ -505,7 +505,7 @@ module Client =
         let OrgChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new OrgChart(container.Body)
+                let visualization = new OrgChart(container.Dom)
                 let options = OrgChartOptions(allowHtml = true)
                 visualization.draw(OrgChartData (), options);)
 
@@ -513,7 +513,7 @@ module Client =
         let ScatterChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new ScatterChart(container.Body)
+                let visualization = new ScatterChart(container.Dom)
                 let vAxis = new Axis(title = "Weight")
                 let hAxis = new Axis(title = "Age")
                 let options =
@@ -530,7 +530,7 @@ module Client =
         let PieChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new PieChart(container.Body)
+                let visualization = new PieChart(container.Dom)
                 let options =
                     PieChartOptions(
                         width = 400,
@@ -544,7 +544,7 @@ module Client =
         let MotionChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new MotionChart(container.Body)
+                let visualization = new MotionChart(container.Dom)
                 let options =
                     MotionChartOptions(
                         width = 600.,
@@ -555,7 +555,7 @@ module Client =
         let BlogMotionChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new MotionChart(container.Body)
+                let visualization = new MotionChart(container.Dom)
                 let options =
                     MotionChartOptions(
                         width = 600.,
@@ -566,14 +566,14 @@ module Client =
         let IntensityMap () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new IntensityMap(container.Body)
+                let visualization = new IntensityMap(container.Dom)
                 visualization.draw(IntensityMapData (), IntensityMapOptions()))
 
         [<JavaScript>]
         let GeoMapMarkers () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new GeoChart(container.Body)
+                let visualization = new GeoChart(container.Dom)
                 let options =
                     GeoChartOptions(
                         region = Countries.Alpha2Codes.US,
@@ -585,14 +585,14 @@ module Client =
         let GeoMap () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new GeoChart(container.Body)
+                let visualization = new GeoChart(container.Dom)
                 visualization.draw(GeoMapData (), GeoChartOptions()))
 
         [<JavaScript>]
         let ColumnChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new ColumnChart(container.Body)
+                let visualization = new ColumnChart(container.Dom)
                 let options =
                     ColumnChartOptions(
                         width = 400,
@@ -605,7 +605,7 @@ module Client =
         let LineChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new LineChart(container.Body)
+                let visualization = new LineChart(container.Dom)
                 let options =
                     LineChartOptions(
                         width = 400,
@@ -619,7 +619,7 @@ module Client =
         let BarChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new BarChart(container.Body)
+                let visualization = new BarChart(container.Dom)
                 let options =
                     BarChartOptions(
                         width = 400,
@@ -632,7 +632,7 @@ module Client =
         let Gauge () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Gauge(container.Body)
+                let visualization = new Gauge(container.Dom)
                 let options =
                     GaugeOptions(
                         width = 400.,
@@ -648,7 +648,7 @@ module Client =
         let AreaChart () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new AreaChart(container.Body)
+                let visualization = new AreaChart(container.Dom)
                 let options =
                     AreaChartOptions(
                         width = 400,
@@ -662,7 +662,7 @@ module Client =
         let ColorObject () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new AreaChart(container.Body)
+                let visualization = new AreaChart(container.Dom)
                 let options =
                     AreaChartOptions(
                         width = 400,
@@ -677,14 +677,14 @@ module Client =
         let Timeline () =
             Div [Attr.Style "width:700px; height:240px;"]
             |>! OnAfterRender(fun container ->
-                let visualization = new Timeline(container.Body)
+                let visualization = new Timeline(container.Dom)
                 visualization.draw(ATLData (), TimelineOptions()))
 
         [<JavaScript>]
         let TableExample () =
             Div []
             |>! OnAfterRender(fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 visualization.draw(TableData (), TableOptions()))
 
         [<JavaScript>]
@@ -693,14 +693,14 @@ module Client =
                   :: [for view in Views ()
                        -> Div [Attr.Style "width:500px"]
                           |>! OnAfterRender (fun container ->
-                                let visualization = new Table(container.Body)
+                                let visualization = new Table(container.Dom)
                                 visualization.draw(view, TableOptions()))])
 
         [<JavaScript>]
         let TableWithRowNumbers () =
             Div []
             |>! OnAfterRender (fun container ->
-                let visualization = new Table(container.Body)
+                let visualization = new Table(container.Dom)
                 let options = TableOptions(showRowNumber = true)
                 visualization.draw(TableData (), options))
 
@@ -710,7 +710,7 @@ module Client =
             Div [Attr.Id "myTreeMap"; Attr.Style "width: 1100px; height: 500px;"]
             |>! OnAfterRender (fun container ->
             
-                let visualization = new TreeMap(container.Body)
+                let visualization = new TreeMap(container.Dom)
                 let options =
                     TreeMapOptions(
                         minColor = "#f00",
@@ -757,8 +757,8 @@ module Client =
                  TableWithRowNumbers ()
 
                 ]
-                |> fun x -> JQuery.JQuery.Of(x.Body).Children().Width(440).Ignore; x
-                :> IPagelet
+                |> fun x -> JQuery.JQuery.Of(x.Dom).Children().Width(440).Ignore; x
+                :> _
 
 
 open IntelliFactory.WebSharper.Sitelets
@@ -767,7 +767,7 @@ type Action = | Index
 
 module Site =
 
-    open IntelliFactory.Html
+    open IntelliFactory.WebSharper.Html.Server
 
     let HomePage =
         Content.PageContent <| fun ctx ->

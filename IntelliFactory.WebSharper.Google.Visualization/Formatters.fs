@@ -13,6 +13,7 @@ namespace IntelliFactory.WebSharper.Google.Visualization.Formatters
 
 open Microsoft.FSharp.Quotations
 open IntelliFactory.WebSharper
+open IntelliFactory.WebSharper.JavaScript
 open IntelliFactory.WebSharper.Google.Visualization.Base
 
 [<AbstractClass>]
