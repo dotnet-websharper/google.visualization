@@ -8,14 +8,14 @@
 // prohibited without the written consent of the copyright holder.
 //-----------------------------------------------------------------
 // $end{copyright}
-namespace IntelliFactory.WebSharper.Google.Visualization
+namespace WebSharper.Google.Visualization
 
 module Dependencies =
     open System
     open System.Configuration
     open System.IO
-    open IntelliFactory.WebSharper
-    module R = IntelliFactory.WebSharper.Resources
+    open WebSharper
+    module R = WebSharper.Resources
 
     /// Requires the Google JS API.
     [<Sealed>]

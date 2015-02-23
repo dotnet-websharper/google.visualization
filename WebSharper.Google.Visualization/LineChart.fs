@@ -9,19 +9,27 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization
+namespace WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
-open IntelliFactory.WebSharper.Google.Visualization
-open IntelliFactory.WebSharper.Google.Visualization.Base
+open WebSharper
+open WebSharper.JavaScript
+open WebSharper.Google.Visualization
+open WebSharper.Google.Visualization.Base
 
-type ScatterChartOptions [<Inline "{}">] () =
+[<RequireQualifiedAccess>]
+type CurveType =
+    | [<Constant "none">] None
+    | [<Constant "function">] Function
+
+type LineChartOptions [<Inline "{}">] () =
     inherit ChartOptionsCommon()
 
     [<DefaultValue>]
     val mutable curveType : CurveType
+
+    [<DefaultValue>]
+    val mutable interpolateNulls : bool
 
     [<DefaultValue>]
     val mutable lineWidth : int
@@ -29,9 +37,12 @@ type ScatterChartOptions [<Inline "{}">] () =
     [<DefaultValue>]
     val mutable pointSize : int
 
+    [<DefaultValue>]
+    val mutable vAxes : Axis[]
+
 /// A line chart that is rendered within the browser using SVG or VML. Displays 
 /// tips when clicking on points. Animates lines when clicking on legend entries. 
-[<Name "google.visualization.ScatterChart">]
+[<Name "google.visualization.LineChart">]
 [<Require(typeof<Dependencies.CoreChart>)>]
-type ScatterChart [<Stub>] (elem: Dom.Element) =
-    inherit ChartCommon<ScatterChartOptions> ()
+type LineChart [<Stub>] (elem: Dom.Element) =
+    inherit ChartCommon<LineChartOptions> ()

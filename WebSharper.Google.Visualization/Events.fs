@@ -9,29 +9,29 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization
+namespace WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
-open IntelliFactory.WebSharper.Google.Visualization
-open IntelliFactory.WebSharper.Google.Visualization.Base
+open WebSharper
+open WebSharper.JavaScript
+open WebSharper.Google.Visualization
+open WebSharper.Google.Visualization.Base
 
 [<Require(typeof<Dependencies.JsApi>)>]
 module Events = 
 
     module private Visualizations =
-        type AreaChart = IntelliFactory.WebSharper.Google.Visualization.AreaChart
-        type BarChart = IntelliFactory.WebSharper.Google.Visualization.BarChart
-        type ColumnChart = IntelliFactory.WebSharper.Google.Visualization.ColumnChart
-        type LineChart = IntelliFactory.WebSharper.Google.Visualization.LineChart
-        type PieChart = IntelliFactory.WebSharper.Google.Visualization.PieChart
-        type ScatterChart = IntelliFactory.WebSharper.Google.Visualization.ScatterChart
-        type IntensityMap = IntelliFactory.WebSharper.Google.Visualization.IntensityMap
-        type MotionChart = IntelliFactory.WebSharper.Google.Visualization.MotionChart
-        type OrgChart = IntelliFactory.WebSharper.Google.Visualization.OrgChart
-        type Table = IntelliFactory.WebSharper.Google.Visualization.Table
-        type TreeMap = IntelliFactory.WebSharper.Google.Visualization.TreeMap
+        type AreaChart = WebSharper.Google.Visualization.AreaChart
+        type BarChart = WebSharper.Google.Visualization.BarChart
+        type ColumnChart = WebSharper.Google.Visualization.ColumnChart
+        type LineChart = WebSharper.Google.Visualization.LineChart
+        type PieChart = WebSharper.Google.Visualization.PieChart
+        type ScatterChart = WebSharper.Google.Visualization.ScatterChart
+        type IntensityMap = WebSharper.Google.Visualization.IntensityMap
+        type MotionChart = WebSharper.Google.Visualization.MotionChart
+        type OrgChart = WebSharper.Google.Visualization.OrgChart
+        type Table = WebSharper.Google.Visualization.Table
+        type TreeMap = WebSharper.Google.Visualization.TreeMap
 
     [<Inline "google.visualization.events.addListener($target, $event, $h)">]
     let internal listen<'param> (target: obj) 

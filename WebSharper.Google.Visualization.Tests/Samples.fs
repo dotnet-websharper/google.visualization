@@ -13,17 +13,17 @@
 // And the examples in the visualization gallery.
 // http://code.google.com/apis/visualization/documentation/gallery.html
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Tests
+namespace WebSharper.Google.Visualization.Tests
 
 module Client =
-    open IntelliFactory.WebSharper
-    open IntelliFactory.WebSharper.JavaScript
-    open IntelliFactory.WebSharper.Html.Client
-    open IntelliFactory.WebSharper.Google.Visualization
-    open IntelliFactory.WebSharper.Google.Visualization.Base
+    open WebSharper
+    open WebSharper.JavaScript
+    open WebSharper.Html.Client
+    open WebSharper.Google.Visualization
+    open WebSharper.Google.Visualization.Base
 
     module Util =
-        open IntelliFactory.WebSharper
+        open WebSharper
         [<Inline "alert($msg)">]
         let Alert (msg: obj) : unit = X
         [<Inline "google.setOnLoadCallback($x)">]
@@ -761,13 +761,13 @@ module Client =
                 :> _
 
 
-open IntelliFactory.WebSharper.Sitelets
+open WebSharper.Sitelets
 
 type Action = | Index
 
 module Site =
 
-    open IntelliFactory.WebSharper.Html.Server
+    open WebSharper.Html.Server
 
     let HomePage =
         Content.PageContent <| fun ctx ->

@@ -9,13 +9,13 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization
+namespace WebSharper.Google.Visualization
 
 open Microsoft.FSharp.Quotations
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
-open IntelliFactory.WebSharper.Google.Visualization
-open IntelliFactory.WebSharper.Google.Visualization.Base
+open WebSharper
+open WebSharper.JavaScript
+open WebSharper.Google.Visualization
+open WebSharper.Google.Visualization.Base
 
 type ColumnChartOptions [<Inline "{}">] () =
     inherit ChartOptionsCommon()

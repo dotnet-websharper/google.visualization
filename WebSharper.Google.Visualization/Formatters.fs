@@ -9,12 +9,12 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Formatters
+namespace WebSharper.Google.Visualization.Formatters
 
 open Microsoft.FSharp.Quotations
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
-open IntelliFactory.WebSharper.Google.Visualization.Base
+open WebSharper
+open WebSharper.JavaScript
+open WebSharper.Google.Visualization.Base
 
 [<AbstractClass>]
 type Formatter() =

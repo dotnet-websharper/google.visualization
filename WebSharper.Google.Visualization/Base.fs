@@ -9,10 +9,10 @@
 //-----------------------------------------------------------------
 // $end{copyright}
 
-namespace IntelliFactory.WebSharper.Google.Visualization
+namespace WebSharper.Google.Visualization
 
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
+open WebSharper
+open WebSharper.JavaScript
 
 type BoundingBox [<Inline "{}">] () =
     [<DefaultValue>]
@@ -238,11 +238,11 @@ type Trendline [<Inline "{}">] () =
     [<DefaultValue>]
     val mutable visibleInLegend : bool
 
-namespace IntelliFactory.WebSharper.Google.Visualization.Base
+namespace WebSharper.Google.Visualization.Base
 
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JavaScript
-open IntelliFactory.WebSharper.Google.Visualization
+open WebSharper
+open WebSharper.JavaScript
+open WebSharper.Google.Visualization
 
 // Simple wrap to improve IntelliSense
 type ColumnType = 
