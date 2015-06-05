@@ -16,6 +16,7 @@ module Dependencies =
     open System.IO
     open WebSharper
     module R = WebSharper.Resources
+    module CR = WebSharper.Core.Resources
 
     /// Requires the Google JS API.
     [<Sealed>]
@@ -46,7 +47,7 @@ module Dependencies =
     type Visualization() =
         interface R.IResource with
             member this.Render ctx html =
-                render html "google.load('visualization', '1');"
+                render (html CR.Scripts) "google.load('visualization', '1');"
 
     [<AbstractClass>]
     type BaseResourceDefinition(package: string) =
@@ -54,7 +55,7 @@ module Dependencies =
             member this.Render ctx html =
                 String.Format("google.load(\"visualization\",\
                     \"1\", {{packages:[\"{0}\"]}});", package)
-                |> render html
+                |> render (html CR.Scripts)
 
     type internal B = BaseResourceDefinition
 
