@@ -329,7 +329,7 @@ type SortType [<Inline "{}">] private () =
         new SortType(column = column, desc = desc)
 
 /// Dummy type that contains common functions of DataTable and DataView
-type DataCommon [<Stub>] () =
+type DataCommon internal () =
 
     /// Returns the identifier of a given column specified by the column index in the
     /// underlying table For data tables that are retrieved by queries, the column identifier
@@ -1166,7 +1166,7 @@ type DataView =
     [<Stub>]
     member this.setRows(rowIndexes: int []) : unit = X
 
-type ChartLayoutInterface [<Stub>] internal () =
+type ChartLayoutInterface internal () =
     [<Stub>]
     member this.getBoundingBox() = X<BoundingBox>
 
@@ -1251,7 +1251,7 @@ type ChartOptionsCommon [<Inline "{}">] () =
     val mutable width : int
 
 [<Require(typeof<Dependencies.JsApi>)>]
-type ChartCommon<'Options> [<Stub>] internal () =
+type ChartCommon<'Options> internal () =
 
     inherit ChartLayoutInterface()
 
