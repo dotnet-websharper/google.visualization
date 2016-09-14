@@ -46,16 +46,29 @@ module Dependencies =
     [<Sealed>]
     type Visualization() =
         interface R.IResource with
+#if ZAFIR
+            member this.Render ctx =
+                fun html -> render (html CR.Scripts) "google.load('visualization', '1');"
+#else
             member this.Render ctx html =
                 render (html CR.Scripts) "google.load('visualization', '1');"
+#endif
 
     [<AbstractClass>]
     type BaseResourceDefinition(package: string) =
         interface R.IResource with
+#if ZAFIR
+            member this.Render ctx =
+                let code =
+                    String.Format("google.load(\"visualization\",\
+                        \"1\", {{packages:[\"{0}\"]}});", package)
+                fun html -> render (html CR.Scripts) code
+#else
             member this.Render ctx html =
                 String.Format("google.load(\"visualization\",\
                     \"1\", {{packages:[\"{0}\"]}});", package)
                 |> render (html CR.Scripts)
+#endif
 
     type internal B = BaseResourceDefinition
 
