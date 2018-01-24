@@ -6,3 +6,9 @@ build
 /tools/packages/
 /packages/
 /build/
+bin/
+obj/
+/.fake/
+/paket-files/
+/.vscode/
+nuget/*.paket.template

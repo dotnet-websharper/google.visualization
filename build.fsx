@@ -1,38 +1,17 @@
-#load "tools/includes.fsx"
-open IntelliFactory.Build
+#load "paket-files/build/intellifactory/websharper/tools/WebSharper.Fake.fsx"
+open Fake
+open WebSharper.Fake
 
-let bt =
-    BuildTool().PackageId("WebSharper.Google.Visualization")
-        .VersionFrom("WebSharper", versionSpec = "(,4.0)")
-        .WithFSharpVersion(FSharpVersion.FSharp30)
-        .WithFramework(fun fw -> fw.Net40)
+let targets =
+    GetSemVerOf "WebSharper"
+    |> ComputeVersion
+    |> WSTargets.Default
+    |> MakeTargets
 
-let main =
-    bt.WebSharper.Library("WebSharper.Google.Visualization")
-        .SourcesFromProject()
+Target "Build" DoNothing
+targets.BuildDebug ==> "Build"
 
-let test =
-    bt.WebSharper.HtmlWebsite("WebSharper.Google.Visualization.Tests")
-        .SourcesFromProject()
-        .References(fun r ->
-            [
-                r.Project main
-                r.NuGet("WebSharper.Html").Version("(,4.0)").Reference()
-            ])
+Target "CI-Release" DoNothing
+targets.CommitPublish ==> "CI-Release"
 
-bt.Solution [
-    main
-    test
-
-    bt.NuGet.CreatePackage()
-        .Configure(fun c ->
-            { c with
-                Title = Some "WebSharper.Google.Visualization-2013.08.27"
-                LicenseUrl = Some "http://websharper.com/licensing"
-                ProjectUrl = Some "https://github.com/intellifactory/websharper.google.visualization"
-                Description = "WebSharper Extensions for Google Visualization 2013.08.27"
-                RequiresLicenseAcceptance = true })
-        .Add(main)
-
-]
-|> bt.Dispatch
+RunTargetOrDefault "Build"

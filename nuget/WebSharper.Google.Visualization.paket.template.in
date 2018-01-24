@@ -1,0 +1,19 @@
+type file
+id WebSharper.Google.Visualization
+authors
+    IntelliFactory
+owners
+    IntelliFactory
+licenseUrl http://websharper.com/licensing
+projectUrl https://github.com/intellifactory/websharper.google.visualization
+description
+    WebSharper Extensions for Google Visualization 2013.08.27
+tags
+    Web JavaScript F# C#
+files
+    ../WebSharper.Google.Visualization/bin/Release/net461/WebSharper.Google.Visualization.dll ==> lib/net461
+    ../WebSharper.Google.Visualization/bin/Release/net461/WebSharper.Google.Visualization.xml ==> lib/net461
+    ../WebSharper.Google.Visualization/bin/Release/netstandard2.0/WebSharper.Google.Visualization.dll ==> lib/netstandard2.0
+    ../WebSharper.Google.Visualization/bin/Release/netstandard2.0/WebSharper.Google.Visualization.xml ==> lib/netstandard2.0
+dependencies
+        WebSharper ~> LOCKEDVERSION/3
