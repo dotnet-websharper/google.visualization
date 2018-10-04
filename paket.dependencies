@@ -4,6 +4,7 @@ source https://daily.websharper.com/nuget
 
 storage: none
 
+nuget FSharp.Core ~> 4.2.0
 nuget WebSharper prerelease
 nuget WebSharper.FSharp prerelease
 nuget WebSharper.Html prerelease
