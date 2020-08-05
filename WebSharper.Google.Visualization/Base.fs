@@ -1259,7 +1259,7 @@ type ChartOptionsCommon [<Inline "{}">] () =
     [<DefaultValue>]
     val mutable width : int
 
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 type ChartCommon<'Options> internal () =
 
     inherit ChartLayoutInterface()

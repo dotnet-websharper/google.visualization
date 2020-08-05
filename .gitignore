@@ -10,5 +10,6 @@ bin/
 obj/
 /.fake/
 /paket-files/
+/.vs/
 /.vscode/
 nuget/*.paket.template

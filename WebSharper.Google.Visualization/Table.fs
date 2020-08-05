@@ -197,7 +197,7 @@ type SortInfo = {
 }
 
 [<Name "google.visualization.Table">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 [<Require(typeof<Dependencies.Table>)>]
 type Table =
     [<Stub>]

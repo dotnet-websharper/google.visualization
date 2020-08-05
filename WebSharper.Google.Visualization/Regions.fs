@@ -27,7 +27,7 @@ open WebSharper.Google.Visualization
 open WebSharper.Google.Visualization.Base
 
 /// Dummy type to simulate the region enumeration.
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 type Region =
     [<Inline "$s">]
     static member FromString (s: string) : Region = X

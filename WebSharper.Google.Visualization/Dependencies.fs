@@ -26,88 +26,110 @@ module Dependencies =
     open WebSharper
     module R = WebSharper.Resources
     module CR = WebSharper.Core.Resources
-
-    /// Requires the Google JS API.
-    [<Sealed>]
-    type JsApi() =
-        inherit R.BaseResource("https://www.google.com/jsapi")
-    //    interface R.IResource with
-    //        member this.Render ctx html =
-    //            let src =
-    //                String.concat "" [
-    //                    defaultArg (ctx.GetSetting "Google.JsAPI")
-    //                        "http://www.google.com/jsapi"
-    //                    "?key="
-    //                    defaultArg (ctx.GetSetting "google.jsapi.key")
-    //                        "your-key-here"
-    //                ]
-    //            html.AddAttribute("type", "text/javascript")
-    //            html.AddAttribute("src", src)
-    //            html.RenderBeginTag "script"
-    //            html.RenderEndTag()
-
+    
     let private render (html: CR.HtmlTextWriter) (code: string) =
         html.AddAttribute("type", "text/javascript")
         html.RenderBeginTag "script"
         html.WriteLine code
         html.RenderEndTag()
 
+    /// Some objects may be bound in other scripts before being initialized by the library
     [<Sealed>]
-    type Visualization() =
+    type GoogleChartsDefineObjects() =
         interface R.IResource with
             member this.Render ctx =
-                fun html -> render (html CR.Scripts) "google.load('visualization', '1');"
+                let code = "\
+                    if(window.google===undefined) window.google=new Object(); \
+                    if(google.visualization===undefined) google.visualization=new Object(); \
+                    if(google.visualization.events===undefined) google.visualization.events=new Object();"
+                fun html -> render (html CR.Scripts) code
+
+    /// Requires the Google Charts API.
+    [<Sealed>]
+    [<Require(typeof<GoogleChartsDefineObjects>)>]
+    type GoogleCharts() =
+        inherit R.BaseResource("https://www.gstatic.com/charts/loader.js")
+
+        //interface R.IResource with
+        //    member this.Render ctx = fun writer ->
+        //        let html = writer Core.Resources.RenderLocation.Scripts
+        //        let src =
+        //            String.concat "" [
+        //                defaultArg (ctx.GetSetting "Google.Charts")
+        //                    "https://www.gstatic.com/charts/loader.js"
+        //                "?key="
+        //                defaultArg (ctx.GetSetting "google.jsapi.key")
+        //                    "your-key-here"
+        //            ]
+        //        html.AddAttribute("type", "text/javascript")
+        //        html.AddAttribute("src", src)
+        //        html.RenderBeginTag "script"
+        //        html.RenderEndTag()
 
     [<AbstractClass>]
     type BaseResourceDefinition(package: string) =
         interface R.IResource with
             member this.Render ctx =
+                let version =
+                    ctx.GetSetting "Google.Charts.Version"
+                    |> Option.defaultValue "45.2"
+                let mapsApiKey =
+                    if package = "geochart" then
+                        ctx.GetSetting "Google.Maps.ApiKey"
+                        |> Option.map (sprintf ",mapsApiKey:%s")
+                        |> Option.defaultValue ""
+                    else ""
                 let code =
-                    String.Format("google.load(\"visualization\",\
-                        \"1\", {{packages:[\"{0}\"]}});", package)
+                    String.Format("google.charts.load(\"{0}\",\
+                        {{packages:[\"{1}\"]{2}}});", version, package, mapsApiKey)
                 fun html -> render (html CR.Scripts) code
 
     type internal B = BaseResourceDefinition
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type Table() =
         inherit B("table")
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type Timeline() =
         inherit B("timeline")
-
-    [<Require(typeof<JsApi>)>]
-    type AreaChart() =
-        inherit B("corechart")
-
-    [<Require(typeof<JsApi>)>]
-    type Gauge() =
-        inherit B("gauge")
-
-    [<Require(typeof<JsApi>)>]
+        
+    [<Require(typeof<GoogleCharts>)>]
     type CoreChart() =
         inherit B("corechart")
 
-    [<Require(typeof<JsApi>)>]
+    type AreaChart = CoreChart
+
+    [<Require(typeof<GoogleCharts>)>]
+    type Gauge() =
+        inherit B("gauge")
+
+    [<Require(typeof<GoogleCharts>)>]
     type GeoChart() =
         inherit B("geochart")
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type IntensityMap() =
         inherit B("intensitymap")
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type MotionChart() =
         inherit B("motionchart")
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type OrgChart() =
         inherit B("orgchart")
 
-    [<Require(typeof<JsApi>)>]
+    [<Require(typeof<GoogleCharts>)>]
     type TreeMap() =
         inherit B("treemap")
 
-    [<assembly:Require(typeof<JsApi>)>]
+    [<assembly:Require(typeof<GoogleCharts>)>]
     do ()
+
+module GoogleCharts =
+    open WebSharper
+    open WebSharper.JavaScript
+
+    [<Inline "google.charts.setOnLoadCallback($x)">]
+    let OnLoad (x: unit -> unit) : unit = X

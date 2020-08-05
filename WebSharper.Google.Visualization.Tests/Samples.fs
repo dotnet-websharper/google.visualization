@@ -35,8 +35,6 @@ module Client =
         open WebSharper
         [<Inline "alert($msg)">]
         let Alert (msg: obj) : unit = X
-        [<Inline "google.setOnLoadCallback($x)">]
-        let OnLoad (x: unit -> unit) : unit = X
 
     module Data =
 
@@ -736,39 +734,42 @@ module Client =
 
         [<JavaScript>]
         override this.Body =
-            Div [
-                 H1 [Text "Google Viz Samples"]
-                 TreeMap ()
-                 AreaChartEvents ()
-                 ArrowFormat ()
-                 BarFormat ()
-                 ColorFormat ()
-                 DateFormat ()
-                 NumberFormat ()
-                 PatternFormat ()
-                 OrgChart ()
-                 ScatterChart ()
-                 PieChart ()
-                 MotionChart ()
-                 BlogMotionChart ()
-                 IntensityMap ()
-                 LineChart ()
-                 GeoMap ()
-                 GeoMapMarkers ()
-                 ColumnChart ()
-                 BarChart ()
-                 AreaChart ()
-                 Gauge ()
-                 ColorObject ()
-                 Timeline ()
-                 TableExample ()
-                 ViewExample ()
-                 TableWithRowNumbers ()
-
+            let container = Div [
+                    H1 [Text "Google Viz Samples"]
                 ]
-                |> fun x -> JQuery.JQuery.Of(x.Dom).Children().Width(440).Ignore; x
-                :> _
-
+            GoogleCharts.OnLoad (fun () ->
+                [
+                    TreeMap ()
+                    AreaChartEvents ()
+                    ArrowFormat ()
+                    BarFormat ()
+                    ColorFormat ()
+                    DateFormat ()
+                    NumberFormat ()
+                    PatternFormat ()
+                    OrgChart ()
+                    ScatterChart ()
+                    PieChart ()
+                    MotionChart ()
+                    BlogMotionChart ()
+                    IntensityMap ()
+                    LineChart ()
+                    GeoMap ()
+                    GeoMapMarkers ()
+                    ColumnChart ()
+                    BarChart ()
+                    AreaChart ()
+                    Gauge ()
+                    ColorObject ()
+                    Timeline ()
+                    TableExample ()
+                    ViewExample ()
+                    TableWithRowNumbers ()
+                ]
+                |> List.iter container.Append
+                JQuery.JQuery.Of(container.Dom).Children().Width(440).Ignore
+            )
+            container :> _
 
 open WebSharper.Sitelets
 

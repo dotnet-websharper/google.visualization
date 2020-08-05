@@ -65,7 +65,7 @@ type TimelineOptions [<Inline "{}">] () =
     val mutable width : int
 
 [<Name "google.visualization.Timeline">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 [<Require(typeof<Dependencies.Timeline>)>]
 type Timeline [<Stub>] (elem: Dom.Element) =
 
