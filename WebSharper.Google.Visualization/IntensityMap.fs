@@ -86,7 +86,7 @@ type IntensityMapOptions [<Inline "{}">] () =
 
 /// An intensity map that highlights regions or countries based on relative values 
 [<Name "google.visualization.IntensityMap">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 [<Require(typeof<Dependencies.IntensityMap>)>]
 type IntensityMap =
     [<Stub>]

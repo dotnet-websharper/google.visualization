@@ -56,7 +56,7 @@ type OrgChartOptions [<Inline "{}">] () =
 /// A line chart that is rendered within the browser using SVG or VML. Displays 
 /// tips when clicking on points. Animates lines when clicking on legend entries. 
 [<Name "google.visualization.OrgChart">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 [<Require(typeof<Dependencies.OrgChart>)>]
 type OrgChart =
     [<Stub>]

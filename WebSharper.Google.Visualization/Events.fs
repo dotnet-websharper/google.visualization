@@ -26,7 +26,7 @@ open WebSharper.JavaScript
 open WebSharper.Google.Visualization
 open WebSharper.Google.Visualization.Base
 
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 module Events = 
 
     module private Visualizations =

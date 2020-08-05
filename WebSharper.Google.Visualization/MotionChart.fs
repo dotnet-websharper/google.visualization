@@ -86,7 +86,7 @@ type MotionChartOptions [<Inline "{}">] () =
 /// A dynamic chart to explore several indicators over time. The chart is rendered within 
 /// the browser using Flash.
 [<Name "google.visualization.MotionChart">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 [<Require(typeof<Dependencies.MotionChart>)>]
 type MotionChart =
     [<Stub>]

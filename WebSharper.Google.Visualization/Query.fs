@@ -82,7 +82,7 @@ type QueryResponse =
 
 /// Represents a query that is sent to a data source.
 [<Name "google.visualization.Query">]
-[<Require(typeof<Dependencies.JsApi>)>]
+[<Require(typeof<Dependencies.GoogleCharts>)>]
 type Query =
 
     /// <param name="dataSourceUrl">
