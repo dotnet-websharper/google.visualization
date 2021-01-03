@@ -4,10 +4,11 @@ source https://daily.websharper.com/nuget
 strategy: min
 storage: none
 
-nuget FSharp.Core ~> 4.2.0
-nuget WebSharper ~> 4.7
-nuget WebSharper.FSharp ~> 4.7
-nuget WebSharper.Html ~> 4.7
+nuget FSharp.Core 5.0.0
+nuget WebSharper prerelease
+nuget WebSharper.FSharp prerelease
+nuget WebSharper.UI prerelease
+nuget WebSharper.AspNetCore prerelease
 
 group wsbuild
     git https://github.com/dotnet-websharper/build-script dotnettool
