@@ -12,4 +12,3 @@ obj/
 /paket-files/
 /.vs/
 /.vscode/
-nuget/*.paket.template

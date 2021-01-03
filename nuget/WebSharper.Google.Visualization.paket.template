@@ -16,4 +16,4 @@ files
     ../WebSharper.Google.Visualization/bin/Release/netstandard2.0/WebSharper.Google.Visualization.dll ==> lib/netstandard2.0
     ../WebSharper.Google.Visualization/bin/Release/netstandard2.0/WebSharper.Google.Visualization.xml ==> lib/netstandard2.0
 dependencies
-        WebSharper ~> LOCKEDVERSION/3
+        WebSharper ~> LOCKEDVERSION:[3]
